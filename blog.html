@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Blog FitGuides Pro – Conseils Nutrition & Sport Maison</title>
+<meta name="description" content="Conseils nutrition, sport maison et perte de poids. Programmes, plans alimentaires et exercices pour mincir rapidement depuis chez vous."/>
+<meta name="keywords" content="perte de poids maison, sport maison, nutrition minceur, HIIT maison, plan alimentaire 7 jours"/>
+<link rel="canonical" href="https://fitguides.vercel.app/blog"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --green:#1B4332;--green-mid:#2D6A4F;--green-light:#52B788;
+  --orange:#F4845F;--dark:#0A0F0A;--card:#111813;
+  --border:#1E2B1E;--text:#F0F7F0;--muted:#7A9A7A;--cream:#F0FDF4;
+}
+body{background:var(--dark);font-family:'DM Sans',sans-serif;color:var(--text);min-height:100vh}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:#2D6A4F;border-radius:2px}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:100;background:rgba(10,15,10,.95);
+  backdrop-filter:blur(20px);border-bottom:1px solid var(--border);
+  padding:0 32px;height:62px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:'Playfair Display',serif;font-size:22px;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:8px}
+.logo span{font-size:11px;background:var(--green);color:#4ADE80;padding:2px 8px;border-radius:999px;font-family:'DM Sans',sans-serif;font-weight:700}
+.nav-links{display:flex;gap:20px;align-items:center}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:14px;font-weight:500;transition:.2s}
+.nav-links a:hover{color:var(--green-light)}
+.nav-cta{background:var(--green);color:#fff!important;padding:8px 18px;border-radius:10px!important;}
+
+/* HERO */
+.hero{text-align:center;padding:80px 24px 60px;
+  background:radial-gradient(ellipse 60% 40% at 50% 0%,rgba(27,67,50,.35) 0%,transparent 70%)}
+.hero-tag{display:inline-flex;align-items:center;gap:6px;background:#1A2B1A;
+  border:1px solid var(--border);border-radius:999px;padding:6px 16px;
+  margin-bottom:20px;font-size:13px;color:var(--green-light);font-weight:600}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(36px,5vw,58px);
+  line-height:1.1;margin-bottom:16px;color:var(--text)}
+.hero h1 em{font-style:italic;color:var(--green-light)}
+.hero p{font-size:16px;color:var(--muted);max-width:540px;margin:0 auto;line-height:1.7}
+
+/* FEATURED */
+.featured{max-width:1100px;margin:0 auto;padding:0 24px 60px}
+.section-title{font-family:'Playfair Display',serif;font-size:28px;margin-bottom:28px;
+  display:flex;align-items:center;gap:12px}
+.section-title::after{content:'';flex:1;height:1px;background:var(--border)}
+
+.featured-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+@media(max-width:700px){.featured-grid{grid-template-columns:1fr}}
+
+.card{background:var(--card);border-radius:20px;overflow:hidden;
+  border:1px solid var(--border);transition:all .3s cubic-bezier(.34,1.56,.64,1);
+  text-decoration:none;display:block}
+.card:hover{transform:translateY(-5px);border-color:var(--green-light);
+  box-shadow:0 20px 50px rgba(0,0,0,.4)}
+
+.card-img{width:100%;height:220px;object-fit:cover;display:block}
+.card-img-placeholder{width:100%;height:220px;display:flex;align-items:center;
+  justify-content:center;font-size:48px}
+
+.card-body{padding:22px}
+.card-tag{font-size:11px;font-weight:700;letter-spacing:1.2px;margin-bottom:10px;
+  display:inline-block;padding:3px 10px;border-radius:999px}
+.card-title{font-family:'Playfair Display',serif;font-size:20px;color:var(--text);
+  line-height:1.3;margin-bottom:10px}
+.card-excerpt{font-size:13.5px;color:var(--muted);line-height:1.65;margin-bottom:16px}
+.card-meta{display:flex;align-items:center;gap:12px;font-size:12px;color:var(--muted)}
+.card-read{color:var(--green-light);font-weight:600;font-size:13px;margin-top:14px;display:flex;align-items:center;gap:5px}
+
+/* ARTICLE VIEW */
+.article-view{display:none;max-width:780px;margin:0 auto;padding:40px 24px 80px}
+.article-view.active{display:block}
+.blog-list{max-width:1100px;margin:0 auto;padding:0 24px 80px}
+.blog-list.hidden{display:none}
+
+.article-hero-img{width:100%;border-radius:16px;margin-bottom:32px;max-height:400px;object-fit:cover}
+.article-tag{font-size:12px;font-weight:700;letter-spacing:1px;padding:4px 12px;
+  border-radius:999px;display:inline-block;margin-bottom:14px}
+.article-title{font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,42px);
+  line-height:1.2;margin-bottom:16px}
+.article-meta{display:flex;gap:16px;font-size:13px;color:var(--muted);margin-bottom:32px;
+  padding-bottom:24px;border-bottom:1px solid var(--border)}
+.article-body h3{font-family:'Playfair Display',serif;font-size:22px;color:var(--green-light);
+  margin:28px 0 12px}
+.article-body p{font-size:15px;color:#C8D8C8;line-height:1.8;margin-bottom:16px}
+.article-body ul,.article-body ol{padding-left:24px;margin-bottom:16px}
+.article-body li{font-size:15px;color:#C8D8C8;line-height:1.8;margin-bottom:6px}
+.article-body strong{color:var(--text)}
+.article-cta{background:linear-gradient(135deg,#1B4332,#2D6A4F);border-radius:16px;
+  padding:32px;text-align:center;margin-top:40px}
+.article-cta h3{font-family:'Playfair Display',serif;font-size:22px;margin-bottom:10px}
+.article-cta p{color:#A8D5C2;font-size:14px;margin-bottom:20px}
+.article-cta a{background:#52B788;color:#fff;padding:13px 28px;border-radius:12px;
+  text-decoration:none;font-weight:700;font-size:15px;display:inline-block}
+.back-btn{display:inline-flex;align-items:center;gap:8px;color:var(--green-light);
+  font-size:14px;font-weight:600;cursor:pointer;margin-bottom:32px;
+  background:none;border:none;padding:0}
+.back-btn:hover{text-decoration:underline}
+
+/* CTA BANNER */
+.cta-banner{background:linear-gradient(135deg,#1B4332,#0A1A0A);
+  padding:60px 24px;text-align:center;border-top:1px solid var(--border)}
+.cta-banner h2{font-family:'Playfair Display',serif;font-size:34px;margin-bottom:12px}
+.cta-banner p{color:var(--muted);font-size:16px;max-width:500px;margin:0 auto 28px}
+.cta-banner a{background:var(--green-light);color:#fff;padding:15px 36px;border-radius:14px;
+  text-decoration:none;font-weight:800;font-size:16px;display:inline-block;
+  transition:.2s;box-shadow:0 8px 30px rgba(82,183,136,.3)}
+.cta-banner a:hover{filter:brightness(1.1)}
+
+footer{text-align:center;padding:28px;font-size:12px;color:#3A5A3A;border-top:1px solid var(--border)}
+
+@keyframes fadeIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.card{animation:fadeIn .5s ease both}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="https://fitguides.vercel.app" class="logo">💪 FitGuides <span>PRO</span></a>
+  <div class="nav-links">
+    <a href="https://fitguides.vercel.app">Boutique</a>
+    <a href="#" onclick="showList()">Blog</a>
+    <a href="https://fitguides.vercel.app" class="nav-cta">Nos guides →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero" id="hero">
+  <div class="hero-tag">📚 Blog & Conseils Gratuits</div>
+  <h1>Tout savoir sur la <em>perte de poids</em><br>et le sport à la maison</h1>
+  <p>Articles experts, programmes et conseils nutrition pour transformer votre corps depuis chez vous.</p>
+</div>
+
+<!-- BLOG LIST -->
+<div class="blog-list" id="blog-list">
+  <div class="featured">
+    <div class="section-title">✨ Articles à la une</div>
+    <div class="featured-grid" id="articles-grid"></div>
+  </div>
+</div>
+
+<!-- ARTICLE VIEW -->
+<div class="article-view" id="article-view">
+  <button class="back-btn" onclick="showList()">← Retour au blog</button>
+  <div id="article-content"></div>
+</div>
+
+<!-- CTA BANNER -->
+<div class="cta-banner">
+  <h2>Prêt à transformer votre corps ?</h2>
+  <p>Téléchargez nos guides PDF complets et commencez votre transformation dès aujourd'hui.</p>
+  <a href="https://fitguides.vercel.app">🔥 Voir les guides — dès 9,99€</a>
+</div>
+
+<footer>© 2025 FitGuides Pro · Blog Nutrition & Sport · <a href="https://fitguides.vercel.app" style="color:#52B788">fitguides.vercel.app</a></footer>
+
+<script>
+const articles = [
+  {
+    id:1,
+    tag:"NUTRITION & SPORT",
+    tagColor:"#52B788",
+    tagBg:"rgba(82,183,136,.15)",
+    emoji:"🏃",
+    imgBg:"linear-gradient(135deg,#0A1E0F,#1B4332)",
+    title:"Comment perdre du poids rapidement à la maison : le guide complet",
+    excerpt:"La perte de poids rapide est possible sans salle de sport. Découvrez les 5 règles d'or et un programme d'entraînement complet à faire dans votre salon.",
+    date:"15 Mai 2025",
+    readTime:"6 min",
+    content:`
+      <h3>Pourquoi perdre du poids à la maison est plus efficace qu'on ne le pense</h3>
+      <p>Beaucoup de personnes pensent qu'il faut absolument une salle de sport pour maigrir. C'est faux. Des études scientifiques montrent que l'alimentation représente <strong>70% des résultats</strong> en matière de perte de poids. Le reste vient de l'activité physique.</p>
+      <p>La bonne nouvelle : vous pouvez contrôler ces deux facteurs depuis chez vous, sans dépenser des centaines d'euros en abonnement.</p>
+
+      <h3>Les 5 règles d'or pour perdre du poids rapidement</h3>
+      <ul>
+        <li><strong>Créer un déficit calorique intelligent</strong> — Un déficit de 300 à 500 calories par jour est idéal pour perdre entre 0,5 et 1 kg par semaine.</li>
+        <li><strong>Augmenter les protéines</strong> — Elles rassasient plus longtemps et préservent le muscle. Visez 1,6 à 2g par kg de poids corporel.</li>
+        <li><strong>S'entraîner 3 à 4 fois par semaine</strong> — Des séances de 25 à 40 minutes suffisent.</li>
+        <li><strong>Boire 2 à 3 litres d'eau par jour</strong> — Accélère le métabolisme de 3 à 11%.</li>
+        <li><strong>Dormir 7 à 9 heures par nuit</strong> — Le manque de sommeil double la difficulté de perdre du poids.</li>
+      </ul>
+
+      <h3>Programme d'entraînement maison pour perdre du poids</h3>
+      <p><strong>Lundi / Jeudi : Cardio + Force (3 tours)</strong></p>
+      <ul>
+        <li>15 squats</li>
+        <li>10 pompes</li>
+        <li>12 fentes par jambe</li>
+        <li>10 burpees</li>
+        <li>30 secondes de planche</li>
+      </ul>
+      <p><strong>Mardi / Vendredi : HIIT 20 minutes</strong></p>
+      <ul>
+        <li>30 secondes d'effort intense</li>
+        <li>15 secondes de repos</li>
+        <li>Répétez 20 cycles</li>
+      </ul>
+      <p><strong>Résultats attendus :</strong> -1 à 2 kg la première semaine, puis -0,5 à 1 kg par semaine ensuite.</p>
+
+      <h3>Les aliments à privilégier</h3>
+      <ul>
+        <li>Protéines maigres : poulet, dinde, œufs, poisson</li>
+        <li>Légumes verts à volonté</li>
+        <li>Glucides complexes : avoine, riz complet, patate douce</li>
+        <li>Bonnes graisses : avocat, huile d'olive, noix</li>
+      </ul>
+    `
+  },
+  {
+    id:2,
+    tag:"EXERCICES",
+    tagColor:"#F4845F",
+    tagBg:"rgba(244,132,95,.15)",
+    emoji:"💪",
+    imgBg:"linear-gradient(135deg,#1E0A0A,#501414)",
+    title:"Sport à la maison pour femme : 20 exercices sans matériel pour mincir",
+    excerpt:"Entre le travail et la famille, pas le temps d'aller en salle ? Voici 20 exercices efficaces à faire dans votre salon, classés par zone du corps.",
+    date:"22 Mai 2025",
+    readTime:"5 min",
+    content:`
+      <h3>Pourquoi le sport à la maison est parfait pour les femmes</h3>
+      <p>Entre le travail, la famille et les obligations quotidiennes, trouver du temps pour aller à la salle de sport est souvent impossible. Le sport à la maison résout ce problème : <strong>pas de trajet, pas d'horaires fixes, pas de regard des autres.</strong></p>
+
+      <h3>Les 20 meilleurs exercices maison pour mincir</h3>
+      <p><strong>🍑 Jambes et fessiers</strong></p>
+      <ol>
+        <li>Squats classiques — 3 x 15 rép.</li>
+        <li>Fentes avant alternées — 3 x 12 par jambe</li>
+        <li>Hip thrust au sol — 4 x 15</li>
+        <li>Kick-back à quatre pattes — 3 x 20 par jambe</li>
+        <li>Sumo squats — 3 x 15</li>
+      </ol>
+      <p><strong>💪 Ventre et abdos</strong></p>
+      <ol start="6">
+        <li>Planche frontale — 3 x 30-60 sec</li>
+        <li>Crunchs — 3 x 20</li>
+        <li>Bicycle crunch — 3 x 15 par côté</li>
+        <li>Mountain climbers — 3 x 20</li>
+        <li>Relevés de jambes — 3 x 15</li>
+      </ol>
+      <p><strong>🔥 Cardio pour brûler les graisses</strong></p>
+      <ol start="11">
+        <li>Jumping jacks — 3 x 30 sec</li>
+        <li>Burpees — 3 x 10</li>
+        <li>High knees — 3 x 30 sec</li>
+        <li>Jump squats — 3 x 12</li>
+        <li>Shadow boxing — 3 x 1 min</li>
+      </ol>
+
+      <h3>Planning hebdomadaire recommandé</h3>
+      <ul>
+        <li><strong>Lundi :</strong> Jambes + fessiers (45 min)</li>
+        <li><strong>Mardi :</strong> Cardio HIIT (25 min)</li>
+        <li><strong>Mercredi :</strong> Repos actif (marche, yoga)</li>
+        <li><strong>Jeudi :</strong> Full body (40 min)</li>
+        <li><strong>Vendredi :</strong> Abdos + cardio (30 min)</li>
+        <li><strong>Weekend :</strong> Repos ou activité douce</li>
+      </ul>
+
+      <h3>Les erreurs à éviter absolument</h3>
+      <ul>
+        <li>Ne pas s'étirer après l'effort</li>
+        <li>Manger trop peu en pensant maigrir plus vite</li>
+        <li>Négliger le sommeil</li>
+        <li>S'entraîner tous les jours sans repos</li>
+      </ul>
+    `
+  },
+  {
+    id:3,
+    tag:"NUTRITION",
+    tagColor:"#60A5FA",
+    tagBg:"rgba(96,165,250,.15)",
+    emoji:"🥗",
+    imgBg:"linear-gradient(135deg,#0A1428,#14325A)",
+    title:"Plan alimentaire perte de poids : 7 jours de menus équilibrés",
+    excerpt:"Un plan alimentaire bien structuré est la clé numéro 1 pour perdre du poids durablement. Voici 7 jours de menus complets et savoureux.",
+    date:"29 Mai 2025",
+    readTime:"7 min",
+    content:`
+      <h3>Les bases d'un bon plan alimentaire minceur</h3>
+      <p>Avant de voir les menus, comprendre quelques principes fondamentaux :</p>
+      <ul>
+        <li><strong>Protéines : 30-35%</strong> de vos apports (rassasiantes, préservent le muscle)</li>
+        <li><strong>Glucides : 35-40%</strong> (privilégiez les glucides complexes)</li>
+        <li><strong>Lipides : 25-30%</strong> (les bonnes graisses sont essentielles)</li>
+      </ul>
+      <p><strong>Apport calorique idéal :</strong> 1 400-1 600 kcal/jour pour une femme active, 1 700-2 000 kcal/jour pour un homme actif.</p>
+
+      <h3>Les menus de la semaine</h3>
+      <p><strong>🟢 LUNDI (1 420 kcal)</strong></p>
+      <ul>
+        <li>Petit-déj : Flocons d'avoine + lait végétal + fruits rouges + 2 œufs</li>
+        <li>Déjeuner : Poulet grillé + riz complet + salade verte</li>
+        <li>Dîner : Saumon + légumes vapeur + patate douce</li>
+      </ul>
+      <p><strong>🟢 MARDI (1 310 kcal)</strong></p>
+      <ul>
+        <li>Petit-déj : 2 œufs brouillés + pain complet + avocat</li>
+        <li>Déjeuner : Salade thon + haricots verts + tomates + œuf dur</li>
+        <li>Dîner : Dinde + ratatouille + quinoa</li>
+      </ul>
+      <p><strong>🟢 MERCREDI (1 170 kcal)</strong></p>
+      <ul>
+        <li>Petit-déj : Smoothie protéiné banane + fromage blanc</li>
+        <li>Déjeuner : Cabillaud + lentilles + épinards</li>
+        <li>Dîner : Omelette 3 œufs + champignons + salade</li>
+      </ul>
+
+      <h3>Les collations autorisées</h3>
+      <ul>
+        <li>1 pomme + 20g amandes (180 kcal)</li>
+        <li>1 yaourt grec 0% + fruits rouges (130 kcal)</li>
+        <li>2 carrés chocolat noir 85% + thé vert (100 kcal)</li>
+      </ul>
+
+      <h3>Les aliments à bannir</h3>
+      <ul>
+        <li>Sucres rapides et sodas</li>
+        <li>Pain blanc et viennoiseries</li>
+        <li>Fast-food et fritures</li>
+        <li>Alcool (calories vides)</li>
+        <li>Jus de fruits industriels</li>
+      </ul>
+    `
+  },
+  {
+    id:4,
+    tag:"HIIT & CARDIO",
+    tagColor:"#A78BFA",
+    tagBg:"rgba(167,139,250,.15)",
+    emoji:"⚡",
+    imgBg:"linear-gradient(135deg,#1E0A28,#46145A)",
+    title:"HIIT maison : le programme de 8 semaines pour brûler les graisses",
+    excerpt:"Le HIIT est la méthode d'entraînement la plus efficace pour brûler les graisses en un minimum de temps. Programme complet 8 semaines sans matériel.",
+    date:"5 Juin 2025",
+    readTime:"6 min",
+    content:`
+      <h3>Qu'est-ce que le HIIT et pourquoi est-il si efficace ?</h3>
+      <p>Le HIIT (High Intensity Interval Training) consiste à alterner des périodes d'effort intense et des périodes de récupération courtes. Cette méthode déclenche l'<strong>effet afterburn</strong> : votre corps continue de brûler des calories jusqu'à 24 heures après la séance.</p>
+      <ul>
+        <li>Brûle 25 à 30% plus de calories que le cardio classique</li>
+        <li>Améliore le métabolisme durablement</li>
+        <li>Préserve la masse musculaire</li>
+        <li>Des séances de 20 à 45 minutes suffisent</li>
+      </ul>
+
+      <h3>Programme HIIT 8 semaines à la maison</h3>
+      <p><strong>Semaines 1-2 : Fondation (débutant)</strong></p>
+      <ul>
+        <li>3 séances par semaine</li>
+        <li>20 sec d'effort / 40 sec de repos</li>
+        <li>15 minutes par séance</li>
+        <li>Exercices : squats, jumping jacks, pompes, planche</li>
+      </ul>
+      <p><strong>Semaines 3-4 : Progression (intermédiaire)</strong></p>
+      <ul>
+        <li>3-4 séances par semaine</li>
+        <li>30 sec d'effort / 30 sec de repos</li>
+        <li>25 minutes par séance</li>
+        <li>Ajout des burpees, mountain climbers, fentes sautées</li>
+      </ul>
+      <p><strong>Semaines 5-6 : Intensification</strong></p>
+      <ul>
+        <li>4 séances par semaine</li>
+        <li>40 sec d'effort / 20 sec de repos</li>
+        <li>35 minutes par séance</li>
+      </ul>
+      <p><strong>Semaines 7-8 : Maximum (avancé)</strong></p>
+      <ul>
+        <li>4-5 séances par semaine</li>
+        <li>45 sec d'effort / 15 sec de repos</li>
+        <li>45 minutes par séance</li>
+      </ul>
+
+      <h3>Exemple de séance HIIT — Semaine 3</h3>
+      <p>Échauffement 5 min, puis 4 tours de :</p>
+      <ol>
+        <li>Burpees — 30 sec</li>
+        <li>Repos — 30 sec</li>
+        <li>Jump squats — 30 sec</li>
+        <li>Repos — 30 sec</li>
+        <li>Mountain climbers — 30 sec</li>
+        <li>Repos — 30 sec</li>
+        <li>High knees — 30 sec</li>
+        <li>Repos — 30 sec</li>
+      </ol>
+      <p>Récupération : 5 min d'étirements.</p>
+    `
+  },
+  {
+    id:5,
+    tag:"CONSEILS EXPERT",
+    tagColor:"#FCD34D",
+    tagBg:"rgba(252,211,77,.15)",
+    emoji:"🎯",
+    imgBg:"linear-gradient(135deg,#1E1A05,#504210)",
+    title:"Perte de poids après 40 ans : ce qui change et comment s'adapter",
+    excerpt:"Perdre du poids après 40 ans est perçu comme plus difficile. Et le corps change. Mais avec les bonnes stratégies, les résultats sont tout aussi accessibles.",
+    date:"12 Juin 2025",
+    readTime:"7 min",
+    content:`
+      <h3>Ce qui change après 40 ans</h3>
+      <ul>
+        <li><strong>Le métabolisme ralentit</strong> — À partir de 40 ans, le métabolisme baisse de 1 à 2% par décennie, soit 100 à 200 calories de moins brûlées par jour.</li>
+        <li><strong>La masse musculaire diminue</strong> — La sarcopénie s'accélère après 40 ans. Moins de muscle = moins de calories brûlées au repos.</li>
+        <li><strong>Les hormones fluctuent</strong> — La préménopause provoque des changements qui favorisent le stockage des graisses abdominales.</li>
+        <li><strong>Le sommeil se dégrade</strong> — Ce qui augmente les hormones du stress et de la faim.</li>
+      </ul>
+
+      <h3>Les stratégies adaptées après 40 ans</h3>
+      <p><strong>1. Prioriser la musculation</strong></p>
+      <p>La musculation est encore plus importante après 40 ans que le cardio. Elle reconstruit la masse musculaire et booste le métabolisme.</p>
+      <p>Programme recommandé : 3 séances de renforcement + 2 séances de cardio léger par semaine.</p>
+
+      <p><strong>2. Augmenter les protéines</strong></p>
+      <p>Les besoins en protéines augmentent avec l'âge. Visez <strong>1,8 à 2,2g par kg</strong> de poids corporel.</p>
+
+      <p><strong>3. Gérer le stress</strong></p>
+      <p>Le cortisol favorise le stockage des graisses abdominales. La méditation, le yoga et les promenades en nature aident à le réduire.</p>
+
+      <p><strong>4. Optimiser le sommeil</strong></p>
+      <p>7 à 8 heures de sommeil de qualité sont essentielles. Évitez les écrans 1 heure avant de dormir.</p>
+
+      <h3>Résultats réalistes après 40 ans</h3>
+      <ul>
+        <li>Perte de 0,5 à 1 kg par semaine est tout à fait réalisable</li>
+        <li>La patience est clé : le corps met plus de temps à s'adapter</li>
+        <li>Les résultats sont durables quand la méthode est adaptée à l'âge</li>
+      </ul>
+
+      <h3>Ce qu'il faut absolument éviter</h3>
+      <ul>
+        <li>Les régimes très restrictifs qui accélèrent la perte musculaire</li>
+        <li>Le cardio excessif sans musculation</li>
+        <li>Comparer ses résultats à ceux de personnes plus jeunes</li>
+        <li>Négliger les jours de repos (la récupération est plus longue)</li>
+      </ul>
+    `
+  },
+];
+
+// Render cards
+const grid = document.getElementById('articles-grid');
+articles.forEach((a, i) => {
+  const delay = i * 0.1;
+  grid.innerHTML += `
+  <div class="card" style="animation-delay:${delay}s;cursor:pointer" onclick="showArticle(${a.id})">
+    <div class="card-img-placeholder" style="background:${a.imgBg}">
+      <span style="font-size:64px">${a.emoji}</span>
+    </div>
+    <div class="card-body">
+      <span class="card-tag" style="color:${a.tagColor};background:${a.tagBg}">${a.tag}</span>
+      <div class="card-title">${a.title}</div>
+      <div class="card-excerpt">${a.excerpt}</div>
+      <div class="card-meta">
+        <span>📅 ${a.date}</span>
+        <span>⏱ ${a.readTime} de lecture</span>
+      </div>
+      <div class="card-read">Lire l'article →</div>
+    </div>
+  </div>`;
+});
+
+function showArticle(id) {
+  const a = articles.find(x => x.id === id);
+  document.getElementById('blog-list').classList.add('hidden');
+  document.getElementById('hero').style.display = 'none';
+  const view = document.getElementById('article-view');
+  view.classList.add('active');
+  document.getElementById('article-content').innerHTML = `
+    <div class="card-img-placeholder" style="background:${a.imgBg};border-radius:16px;margin-bottom:28px;height:300px;font-size:80px;display:flex;align-items:center;justify-content:center">${a.emoji}</div>
+    <span class="article-tag" style="color:${a.tagColor};background:${a.tagBg}">${a.tag}</span>
+    <h1 class="article-title">${a.title}</h1>
+    <div class="article-meta">
+      <span>📅 ${a.date}</span>
+      <span>⏱ ${a.readTime} de lecture</span>
+    </div>
+    <div class="article-body">${a.content}</div>
+    <div class="article-cta">
+      <h3>💪 Passez à l'action maintenant !</h3>
+      <p>Téléchargez nos guides PDF complets pour des résultats concrets dès la première semaine.</p>
+      <a href="https://fitguides.vercel.app">Voir les guides → dès 9,99€</a>
+    </div>
+  `;
+  window.scrollTo(0,0);
+}
+
+function showList() {
+  document.getElementById('blog-list').classList.remove('hidden');
+  document.getElementById('hero').style.display = 'block';
+  document.getElementById('article-view').classList.remove('active');
+  window.scrollTo(0,0);
+}
+</script>
+</body>
+</html>
