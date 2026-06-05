@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Guide Gratuit – 5 Erreurs qui Empêchent de Perdre du Poids | FitGuides Pro</title>
+<meta name="description" content="Téléchargez gratuitement notre guide '5 erreurs fatales qui sabotent votre perte de poids'. Rejoignez 2 000+ personnes transformées."/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<!-- Brevo (ex-Sendinblue) form integration ready -->
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --green:#1B4332;--green-mid:#2D6A4F;--green-light:#52B788;
+  --orange:#F4845F;--dark:#030712;--text:#F9FAFB;--muted:#9CA3AF;
+}
+body{background:var(--dark);font-family:'DM Sans',sans-serif;color:var(--text);min-height:100vh;overflow-x:hidden}
+
+/* ANIMATED BG */
+.bg{position:fixed;inset:0;z-index:0;
+  background:radial-gradient(ellipse 80% 60% at 50% -10%,rgba(27,67,50,.5) 0%,transparent 60%),
+             radial-gradient(ellipse 50% 40% at 80% 80%,rgba(82,183,136,.1) 0%,transparent 60%),
+             #030712}
+
+/* NAV */
+nav{position:relative;z-index:10;display:flex;align-items:center;justify-content:space-between;
+  padding:18px 32px;border-bottom:1px solid rgba(255,255,255,.05)}
+.logo{font-family:'Playfair Display',serif;font-size:20px;display:flex;align-items:center;gap:8px}
+.logo span{font-size:10px;background:var(--green);color:#4ADE80;padding:2px 8px;border-radius:999px;font-family:'DM Sans',sans-serif;font-weight:700}
+.nav-link{color:var(--muted);text-decoration:none;font-size:13px}
+
+/* HERO */
+.hero{position:relative;z-index:10;text-align:center;padding:70px 24px 50px;max-width:700px;margin:0 auto}
+.free-badge{display:inline-flex;align-items:center;gap:8px;
+  background:linear-gradient(135deg,rgba(82,183,136,.2),rgba(82,183,136,.05));
+  border:1px solid rgba(82,183,136,.3);border-radius:999px;
+  padding:8px 20px;margin-bottom:28px;font-size:13px;color:#4ADE80;font-weight:700;
+  animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(82,183,136,.3)}50%{box-shadow:0 0 0 8px rgba(82,183,136,0)}}
+
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(32px,5vw,52px);
+  line-height:1.15;margin-bottom:20px}
+.hero h1 em{font-style:italic;color:var(--green-light)}
+.hero p{font-size:17px;color:var(--muted);line-height:1.7;margin-bottom:36px;max-width:550px;margin-left:auto;margin-right:auto}
+
+/* FORM CARD */
+.form-card{background:rgba(17,24,39,.8);border:1px solid rgba(82,183,136,.2);
+  border-radius:24px;padding:36px 32px;max-width:480px;margin:0 auto 50px;
+  backdrop-filter:blur(20px);box-shadow:0 40px 80px rgba(0,0,0,.5)}
+.form-title{font-size:18px;font-weight:700;margin-bottom:6px;text-align:center}
+.form-sub{font-size:13px;color:var(--muted);text-align:center;margin-bottom:24px}
+
+.field{margin-bottom:14px}
+.field input{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);
+  border-radius:12px;padding:14px 16px;font-size:15px;color:var(--text);
+  outline:none;font-family:'DM Sans',sans-serif;transition:.2s}
+.field input:focus{border-color:var(--green-light);background:rgba(82,183,136,.05)}
+.field input::placeholder{color:var(--muted)}
+
+.submit-btn{width:100%;background:linear-gradient(135deg,#1B4332,#2D6A4F);
+  color:#fff;border:none;border-radius:14px;padding:16px;font-size:16px;
+  font-weight:800;cursor:pointer;transition:all .2s;letter-spacing:.3px;
+  box-shadow:0 8px 32px rgba(27,67,50,.5);margin-top:4px}
+.submit-btn:hover{filter:brightness(1.15);transform:translateY(-2px);
+  box-shadow:0 12px 40px rgba(27,67,50,.7)}
+.submit-btn:active{transform:translateY(0)}
+
+.privacy{text-align:center;font-size:11px;color:#4B5563;margin-top:12px}
+.privacy a{color:var(--green-light)}
+
+/* WHAT YOU GET */
+.what-you-get{position:relative;z-index:10;max-width:700px;margin:0 auto 60px;padding:0 24px}
+.section-label{text-align:center;font-size:12px;font-weight:700;letter-spacing:2px;
+  color:var(--green-light);margin-bottom:16px}
+.what-title{font-family:'Playfair Display',serif;font-size:28px;text-align:center;margin-bottom:32px}
+
+.benefits-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:500px){.benefits-grid{grid-template-columns:1fr}}
+
+.benefit{background:rgba(17,24,39,.6);border:1px solid rgba(255,255,255,.05);
+  border-radius:16px;padding:20px;display:flex;gap:14px;align-items:flex-start}
+.benefit-icon{font-size:28px;flex-shrink:0}
+.benefit-text h4{font-size:14px;font-weight:700;margin-bottom:4px}
+.benefit-text p{font-size:12px;color:var(--muted);line-height:1.5}
+
+/* PREVIEW */
+.preview{position:relative;z-index:10;max-width:700px;margin:0 auto 60px;padding:0 24px}
+.preview-card{background:linear-gradient(135deg,#1B4332,#0D2B1F);border-radius:20px;
+  padding:32px;display:flex;gap:24px;align-items:center;flex-wrap:wrap}
+.preview-book{background:linear-gradient(135deg,#2D6A4F,#1B4332);border-radius:12px;
+  width:120px;height:160px;flex-shrink:0;display:flex;align-items:center;
+  justify-content:center;font-size:48px;box-shadow:8px 8px 20px rgba(0,0,0,.4)}
+.preview-info h3{font-family:'Playfair Display',serif;font-size:22px;margin-bottom:10px}
+.preview-info p{font-size:14px;color:#A8D5C2;line-height:1.7;margin-bottom:14px}
+.preview-chapters{display:flex;flex-direction:column;gap:6px}
+.chapter{display:flex;align-items:center;gap:8px;font-size:13px;color:#D1FAE5}
+.chapter::before{content:"✓";color:var(--green-light);font-weight:700}
+
+/* TESTIMONIALS */
+.testimonials{position:relative;z-index:10;max-width:700px;margin:0 auto 60px;padding:0 24px}
+.testi-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:500px){.testi-grid{grid-template-columns:1fr}}
+.testi{background:rgba(17,24,39,.6);border:1px solid rgba(255,255,255,.05);
+  border-radius:14px;padding:18px}
+.testi-stars{color:#FCD34D;font-size:13px;margin-bottom:8px}
+.testi-text{font-size:13px;color:#D1D5DB;line-height:1.6;margin-bottom:10px}
+.testi-author{font-size:12px;color:var(--muted);font-weight:600}
+
+/* URGENCY */
+.urgency{position:relative;z-index:10;max-width:700px;margin:0 auto 40px;padding:0 24px}
+.urgency-box{background:rgba(244,132,95,.1);border:1px solid rgba(244,132,95,.3);
+  border-radius:16px;padding:20px 24px;display:flex;align-items:center;gap:14px}
+.urgency-icon{font-size:28px;flex-shrink:0}
+.urgency-text{font-size:14px;color:#FDE8E0;line-height:1.5}
+.urgency-text strong{color:var(--orange)}
+
+/* BOTTOM CTA */
+.bottom-cta{position:relative;z-index:10;text-align:center;padding:0 24px 60px}
+.bottom-cta h2{font-family:'Playfair Display',serif;font-size:28px;margin-bottom:12px}
+.bottom-cta p{color:var(--muted);font-size:15px;margin-bottom:24px}
+
+/* SUCCESS STATE */
+.success-box{display:none;text-align:center;padding:40px 24px}
+.success-box.show{display:block}
+.success-icon{font-size:72px;margin-bottom:16px}
+.success-box h2{font-family:'Playfair Display',serif;font-size:28px;margin-bottom:12px;color:var(--green-light)}
+.success-box p{color:var(--muted);font-size:15px;line-height:1.7;margin-bottom:24px}
+.success-cta{background:linear-gradient(135deg,#1B4332,#2D6A4F);color:#fff;
+  padding:14px 32px;border-radius:14px;text-decoration:none;font-weight:700;font-size:15px;display:inline-block}
+
+/* COUNTER */
+.counter{display:flex;align-items:center;justify-content:center;gap:8px;
+  font-size:13px;color:var(--muted);margin-top:16px}
+.counter-dot{width:8px;height:8px;background:#4ADE80;border-radius:50%;animation:blink 1.5s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+footer{position:relative;z-index:10;text-align:center;padding:24px;
+  font-size:12px;color:#374151;border-top:1px solid rgba(255,255,255,.05)}
+</style>
+</head>
+<body>
+
+<div class="bg"></div>
+
+<nav>
+  <div class="logo">💪 FitGuides <span>PRO</span></div>
+  <a href="https://fitguides.vercel.app" class="nav-link">← Retour à la boutique</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="free-badge">🎁 100% GRATUIT — Téléchargement immédiat</div>
+  <h1>Les <em>5 erreurs fatales</em> qui sabotent votre perte de poids</h1>
+  <p>Recevez gratuitement notre guide PDF exclusif et découvrez pourquoi vous ne perdez pas de poids malgré vos efforts.</p>
+</div>
+
+<!-- FORM -->
+<div class="form-card" id="form-section">
+  <div class="form-title">📩 Recevez le guide gratuitement</div>
+  <div class="form-sub">Rejoignez 2 147 personnes déjà inscrites</div>
+
+  <iframe
+    width="100%"
+    height="320"
+    src="https://6412e608.sibforms.com/serve/MUIFAGElZgTU_cFvTe3IMlS3W8l0lp5ViPvliXK5OEbDd9_s8GsKTn16yzlfwiecD0JCa90iLuNPe68nuMOlxit2vcvtmvg22GShZKs0CVg2pWozL2f281hn3Bw-KiKO4ry1WzHnwju7d2FpmHpuSNnA5RL6UVNlR6dBEYwJ-FvQo6R2rAwFLH5EJyAys0cMIBmsbjm21GZi0KR4wg=="
+    frameborder="0"
+    scrolling="auto"
+    allowfullscreen
+    style="display:block;margin:0 auto;border-radius:12px;overflow:hidden">
+  </iframe>
+  <div class="privacy">🔒 Vos données sont protégées. Pas de spam, désinscription en 1 clic.</div>
+  <div class="counter">
+    <div class="counter-dot"></div>
+    <span id="counter-text">47 personnes ont téléchargé ce guide aujourd'hui</span>
+  </div>
+</div>
+
+<!-- SUCCESS -->
+<div class="success-box" id="success-section">
+  <div class="success-icon">🎉</div>
+  <h2>Votre guide arrive dans votre boîte mail !</h2>
+  <p>Vérifiez votre boîte mail (et vos spams) dans les prochaines minutes.<br/>
+  En attendant, découvrez nos guides complets pour aller encore plus loin.</p>
+  <a href="https://fitguides.vercel.app" class="success-cta">💪 Voir les guides — dès 9,99€ →</a>
+</div>
+
+<!-- WHAT YOU GET -->
+<div class="what-you-get">
+  <div class="section-label">CE QUE VOUS ALLEZ DÉCOUVRIR</div>
+  <div class="what-title">Un guide qui change tout</div>
+  <div class="benefits-grid">
+    <div class="benefit">
+      <div class="benefit-icon">🚫</div>
+      <div class="benefit-text">
+        <h4>Erreur #1 : Le cardio à outrance</h4>
+        <p>Pourquoi courir 1h par jour peut bloquer votre perte de poids</p>
+      </div>
+    </div>
+    <div class="benefit">
+      <div class="benefit-icon">🍽️</div>
+      <div class="benefit-text">
+        <h4>Erreur #2 : Manger trop peu</h4>
+        <p>Le paradoxe qui ralentit votre métabolisme sans que vous le sachiez</p>
+      </div>
+    </div>
+    <div class="benefit">
+      <div class="benefit-icon">😴</div>
+      <div class="benefit-text">
+        <h4>Erreur #3 : Négliger le sommeil</h4>
+        <p>Comment 1h de sommeil en moins peut annuler 3 jours d'efforts</p>
+      </div>
+    </div>
+    <div class="benefit">
+      <div class="benefit-icon">⚖️</div>
+      <div class="benefit-text">
+        <h4>Erreur #4 : Obséder sur la balance</h4>
+        <p>Pourquoi le poids n'est pas le bon indicateur et ce qu'il faut mesurer</p>
+      </div>
+    </div>
+    <div class="benefit">
+      <div class="benefit-icon">🧪</div>
+      <div class="benefit-text">
+        <h4>Erreur #5 : Ignorer les protéines</h4>
+        <p>Le macronutriment qui transforme votre corps et que 90% des gens oublient</p>
+      </div>
+    </div>
+    <div class="benefit">
+      <div class="benefit-icon">✅</div>
+      <div class="benefit-text">
+        <h4>BONUS : Le plan d'action</h4>
+        <p>Les 3 changements à faire dès aujourd'hui pour voir des résultats cette semaine</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PREVIEW -->
+<div class="preview">
+  <div class="preview-card">
+    <div class="preview-book">📋</div>
+    <div class="preview-info">
+      <h3>Votre guide gratuit inclut</h3>
+      <p>Un PDF de 12 pages clair, actionnable et basé sur la science.</p>
+      <div class="preview-chapters">
+        <div class="chapter">Les 5 erreurs détaillées avec solutions</div>
+        <div class="chapter">Plan d'action immédiat sur 7 jours</div>
+        <div class="chapter">Liste des aliments à privilégier</div>
+        <div class="chapter">Routine sport de 20 min à la maison</div>
+        <div class="chapter">Accès aux offres exclusives abonnés</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TESTIMONIALS -->
+<div class="testimonials">
+  <div class="section-label">ILS ONT TÉLÉCHARGÉ LE GUIDE</div>
+  <div class="what-title" style="margin-bottom:24px">Ce qu'ils en pensent</div>
+  <div class="testi-grid">
+    <div class="testi">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-text">"J'avais exactement l'erreur #3 ! En dormant mieux, j'ai perdu 2kg en 2 semaines sans rien changer d'autre."</div>
+      <div class="testi-author">Marie L. — Lyon</div>
+    </div>
+    <div class="testi">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-text">"Le guide m'a ouvert les yeux sur le cardio. J'ai arrêté de courir et j'ai commencé la musculation. Résultat : -5kg en 1 mois."</div>
+      <div class="testi-author">Thomas K. — Paris</div>
+    </div>
+    <div class="testi">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-text">"Simple, clair, efficace. En 20 minutes de lecture j'avais compris pourquoi je stagnais depuis 2 ans."</div>
+      <div class="testi-author">Inès M. — Bordeaux</div>
+    </div>
+    <div class="testi">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-text">"Après le guide gratuit j'ai acheté le programme complet. Je ne regrette pas du tout, j'ai perdu 8kg en 6 semaines."</div>
+      <div class="testi-author">Kevin R. — Marseille</div>
+    </div>
+  </div>
+</div>
+
+<!-- URGENCY -->
+<div class="urgency">
+  <div class="urgency-box">
+    <div class="urgency-icon">⚡</div>
+    <div class="urgency-text">
+      <strong>Téléchargement gratuit limité</strong> — Ce guide est normalement vendu 9,99€. 
+      Il est offert gratuitement aux 500 premiers inscrits de chaque mois. 
+      Il reste <strong id="spots-left">47 places</strong> ce mois-ci.
+    </div>
+  </div>
+</div>
+
+<!-- BOTTOM CTA -->
+<div class="bottom-cta">
+  <h2>Prêt à transformer votre corps ?</h2>
+  <p>Téléchargez votre guide gratuit maintenant et commencez dès aujourd'hui.</p>
+  <button class="submit-btn" style="max-width:400px;margin:0 auto;display:block"
+    onclick="document.getElementById('form-section').scrollIntoView({behavior:'smooth'})">
+    🎁 Je veux mon guide GRATUIT →
+  </button>
+</div>
+
+<footer>
+  © 2025 FitGuides Pro · <a href="https://fitguides.vercel.app" style="color:#52B788">fitguides.vercel.app</a> · 
+  Politique de confidentialité · Désinscription en 1 clic
+</footer>
+
+<script>
+// Compteur dynamique
+const spots = Math.floor(Math.random() * 20) + 35;
+document.getElementById('spots-left').textContent = spots + ' places';
+
+let downloads = Math.floor(Math.random() * 20) + 40;
+setInterval(() => {
+  downloads = Math.floor(Math.random() * 20) + 40;
+  document.getElementById('counter-text').textContent = 
+    downloads + ' personnes ont téléchargé ce guide aujourd\'hui';
+}, 8000);
+
+function submitForm() {
+  const prenom = document.getElementById('prenom').value.trim();
+  const email = document.getElementById('email').value.trim();
+  
+  if (!prenom) { alert('Veuillez entrer votre prénom'); return; }
+  if (!email || !email.includes('@')) { alert('Veuillez entrer un email valide'); return; }
+  
+  // Ici tu peux connecter Brevo/Mailchimp avec leur API
+  // Pour l'instant on simule le succès
+  document.getElementById('form-section').style.display = 'none';
+  document.getElementById('success-section').classList.add('show');
+  window.scrollTo(0, 0);
+  
+  // Track conversion (optionnel)
+  console.log('New subscriber:', prenom, email);
+}
+
+// Permet d'appuyer sur Entrée pour soumettre
+document.getElementById('email').addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') submitForm();
+});
+</script>
+</body>
+</html>
+HTMLEOF
+echo "Page email créée !"
