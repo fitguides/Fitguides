@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>FitGuides Pro – Guides PDF Nutrition & Sport à la maison</title>
+<meta name="description" content="Programmes PDF de perte de poids rapide : nutrition, sport à la maison, recettes minceur. Téléchargement immédiat. Résultats dès 2 semaines."/>
+<meta name="keywords" content="guide perte de poids, sport maison, nutrition minceur, programme fitness PDF, regime rapide"/>
+<meta property="og:title" content="FitGuides Pro – Transformez votre corps depuis chez vous"/>
+<meta property="og:description" content="Guides PDF nutrition + sport maison. Téléchargement immédiat. -8kg en 6 semaines."/>
+<meta property="og:type" content="website"/>
+<link rel="canonical" href="https://fitguides.fr"/>
+<script type="text/javascript" src="https://payhip.com/payhip.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --green:#1B4332;--green-mid:#2D6A4F;--green-light:#52B788;--green-pale:#D8F3DC;
+  --orange:#F4845F;--orange-light:#FDE8E0;--dark:#030712;--card:#111827;
+  --border:#1F2937;--text:#F9FAFB;--muted:#9CA3AF;--cream:#F0FDF4;
+}
+body{background:var(--dark);font-family:'DM Sans',sans-serif;color:var(--text);min-height:100vh}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-thumb{background:#374151;border-radius:3px}
+
+nav{position:sticky;top:0;z-index:100;background:rgba(3,7,18,.93);backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--border);height:62px;display:flex;align-items:center;
+  justify-content:space-between;padding:0 28px}
+.logo{font-family:'DM Serif Display',serif;font-size:22px;display:flex;align-items:center;gap:8px}
+.logo span{font-size:11px;background:var(--green);color:#4ADE80;padding:2px 8px;border-radius:999px;font-family:'DM Sans',sans-serif;font-weight:700}
+#cart-btn{background:var(--green);border:none;color:#fff;padding:9px 18px;border-radius:11px;
+  cursor:pointer;font-size:14px;font-weight:700;display:flex;align-items:center;gap:8px;transition:.2s}
+#cart-btn:hover{background:var(--green-mid)}
+#cart-count{background:var(--orange);border-radius:999px;font-size:11px;font-weight:800;padding:1px 7px;display:none}
+
+.hero{text-align:center;padding:70px 24px 50px;
+  background:radial-gradient(ellipse 65% 45% at 50% 0%,rgba(27,67,50,.4) 0%,transparent 70%)}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:#1F2937;border-radius:999px;
+  padding:6px 16px;margin-bottom:22px;font-size:13px;color:var(--green-light);font-weight:600}
+.hero h1{font-family:'DM Serif Display',serif;font-size:clamp(32px,5vw,54px);line-height:1.1;margin-bottom:16px}
+.hero h1 em{font-style:normal;color:var(--green-light)}
+.hero p{font-size:16px;color:var(--muted);max-width:500px;margin:0 auto 32px;line-height:1.7}
+.trust{display:flex;justify-content:center;gap:24px;flex-wrap:wrap}
+.trust span{font-size:13px;color:var(--muted)}
+
+.products{padding:8px 28px 60px;max-width:1080px;margin:0 auto}
+.products h2{font-family:'DM Serif Display',serif;font-size:28px;margin-bottom:24px;text-align:center}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:20px}
+
+.card{background:var(--card);border-radius:18px;overflow:hidden;
+  border:2px solid var(--border);transition:all .3s cubic-bezier(.34,1.56,.64,1);display:flex;flex-direction:column}
+.card:hover{transform:translateY(-6px);border-color:var(--accent)}
+.card-top{padding:26px 22px 18px;position:relative;min-height:130px}
+.badge{position:absolute;top:12px;left:12px;font-size:10px;font-weight:800;letter-spacing:1px;
+  padding:3px 9px;border-radius:999px;color:#fff}
+.disc{position:absolute;top:12px;right:12px;background:#DC2626;color:#fff;
+  font-size:10px;font-weight:800;padding:3px 9px;border-radius:999px}
+.emoji{font-size:48px;text-align:center;display:block;margin-top:12px}
+.pages{text-align:center;font-size:11px;color:rgba(255,255,255,.45);margin-top:4px;font-weight:600;letter-spacing:.8px}
+.card-body{padding:18px 20px 20px;flex:1;display:flex;flex-direction:column}
+.card-name{font-family:'DM Serif Display',serif;font-size:17px;line-height:1.25;margin-bottom:3px}
+.card-sub{font-size:12px;font-weight:600;margin-bottom:10px}
+.card-desc{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:12px}
+.checks{margin-bottom:14px}
+.checks div{display:flex;align-items:center;gap:7px;font-size:12px;color:#D1D5DB;margin-bottom:4px}
+.checks span.chk{font-weight:700;font-size:13px}
+.stars{display:flex;align-items:center;gap:5px;margin-bottom:12px;font-size:12px;color:var(--muted)}
+.star{color:#FCD34D}
+.price-row{display:flex;align-items:baseline;gap:8px;margin-bottom:10px}
+.price{font-size:26px;font-weight:800}
+.old-price{font-size:14px;color:var(--muted);text-decoration:line-through}
+.add-btn{width:100%;border:none;border-radius:11px;padding:12px;font-size:14px;font-weight:700;
+  cursor:pointer;color:#fff;transition:all .2s;letter-spacing:.3px}
+.add-btn:hover{filter:brightness(1.15);box-shadow:0 0 20px rgba(82,183,136,.4)}
+
+.reviews{background:#0B1120;padding:50px 28px;border-top:1px solid var(--border)}
+.reviews-inner{max-width:1080px;margin:0 auto}
+.reviews h2{font-family:'DM Serif Display',serif;font-size:30px;text-align:center;margin-bottom:6px}
+.rev-sub{text-align:center;color:var(--muted);font-size:13px;margin-bottom:32px}
+.rev-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:16px}
+.rev-card{background:var(--card);border-radius:14px;padding:18px;border:1px solid var(--border)}
+.rev-head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.avatar{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#1B4332,#2D6A4F);
+  display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800}
+.rev-name{font-size:13px;font-weight:700}
+.rev-text{font-size:13px;color:var(--muted);line-height:1.65}
+
+footer{text-align:center;padding:28px;font-size:12px;color:#4B5563;border-top:1px solid #111827}
+
+#toast{position:fixed;bottom:24px;right:24px;background:var(--green);color:#fff;border-radius:13px;
+  padding:13px 20px;font-size:14px;font-weight:600;box-shadow:0 8px 32px rgba(0,0,0,.4);
+  display:none;align-items:center;gap:8px;z-index:8000;animation:slideUp .35s ease}
+
+#success-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:9999;
+  align-items:center;justify-content:center;backdrop-filter:blur(8px)}
+#success-modal.open{display:flex}
+.success-box{background:#0F172A;border-radius:22px;padding:44px 36px;max-width:400px;width:90%;
+  text-align:center;border:1px solid var(--border);animation:popIn .5s cubic-bezier(.34,1.56,.64,1)}
+.success-box h2{font-family:'DM Serif Display',serif;font-size:26px;margin-bottom:10px}
+.success-box p{color:var(--muted);font-size:14px;line-height:1.7;margin-bottom:24px}
+#back-btn{background:linear-gradient(135deg,#1B4332,#2D6A4F);color:#fff;border:none;
+  border-radius:13px;padding:13px 28px;font-size:15px;font-weight:700;cursor:pointer}
+
+@keyframes popIn{from{transform:scale(.85);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes slideUp{from{transform:translateY(16px);opacity:0}to{transform:translateY(0);opacity:1}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+
+<div id="promo-banner" style="background:linear-gradient(135deg,#F4845F,#E05C2E);padding:12px 24px;text-align:center;position:relative;z-index:200">
+  <span style="color:#fff;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700">
+    🔥 CODE PROMO : <span style="background:rgba(255,255,255,.25);padding:3px 10px;border-radius:6px;letter-spacing:1px">TIKTOK20</span>
+    → -20% sur tout ·
+    <span id="countdown" style="color:#FFE0D6;font-weight:800">23:47:12</span> restantes ⏰
+  </span>
+  <button onclick="document.getElementById('promo-banner').style.display='none'"
+    style="position:absolute;right:16px;top:50%;transform:translateY(-50%);background:none;border:none;color:#fff;font-size:18px;cursor:pointer">✕</button>
+</div>
+
+<nav>
+  <div class="logo">💪 FitGuides <span>PRO</span></div>
+  <button id="cart-btn" onclick="window.open('https://payhip.com/b/WSuyb','_blank')">🛒 Boutique</button>
+</nav>
+
+<div class="hero">
+  <div class="hero-badge">🔥 Plus de 750 clients satisfaits · Offres limitées</div>
+  <h1>Transformez votre corps<br><em>depuis chez vous</em></h1>
+  <p>Guides PDF complets pour perdre du poids, manger sainement et s'entraîner — sans salle de sport.</p>
+  <div class="trust">
+    <span>⚡ Téléchargement immédiat</span>
+    <span>🔒 Paiement sécurisé</span>
+    <span>💯 Satisfait ou remboursé 30j</span>
+  </div>
+</div>
+
+<div class="products">
+  <h2>Nos guides PDF</h2>
+  <div class="grid" id="products-grid"></div>
+</div>
+
+<div class="reviews">
+  <div class="reviews-inner">
+    <h2>Ce que disent nos clients</h2>
+    <div class="rev-sub">⭐⭐⭐⭐⭐ 4.9/5 · 756 avis vérifiés</div>
+    <div class="rev-grid" id="reviews-grid"></div>
+  </div>
+</div>
+
+<div id="upsell-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:9999;align-items:center;justify-content:center;backdrop-filter:blur(8px)">
+  <div style="background:#0F172A;border-radius:24px;padding:36px 32px;max-width:420px;width:90%;border:1px solid #1F2937;animation:popIn .4s cubic-bezier(.34,1.56,.64,1);font-family:'DM Sans',sans-serif;text-align:center">
+    <div style="font-size:52px;margin-bottom:12px">🎉</div>
+    <div style="font-size:11px;font-weight:700;letter-spacing:2px;color:#F4845F;margin-bottom:8px">OFFRE SPÉCIALE</div>
+    <h2 style="font-family:'DM Serif Display',serif;font-size:24px;color:#F9FAFB;margin-bottom:10px;line-height:1.3">
+      Ajoutez le Pack Complet<br>pour seulement <span style="color:#52B788">+12€ de plus !</span>
+    </h2>
+    <p style="font-size:14px;color:#9CA3AF;margin-bottom:20px;line-height:1.6">
+      Vous avez bien choisi ! Complétez avec nos 3 guides + 2 bonus exclusifs.<br>
+      <strong style="color:#F9FAFB">Valeur : 57,97€ → Aujourd'hui : 24,99€</strong>
+    </p>
+    <div style="background:#1F2937;border-radius:14px;padding:16px;margin-bottom:20px">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><span style="font-size:20px">✅</span><span style="font-size:13px;color:#D1D5DB">Guide Perte de Poids 30 Jours</span></div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><span style="font-size:20px">✅</span><span style="font-size:13px;color:#D1D5DB">Bible de la Nutrition Saine</span></div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><span style="font-size:20px">✅</span><span style="font-size:13px;color:#D1D5DB">Programme HIIT 8 Semaines</span></div>
+      <div style="display:flex;align-items:center;gap:10px"><span style="font-size:20px">🎁</span><span style="font-size:13px;color:#52B788;font-weight:700">+ 2 Bonus exclusifs offerts</span></div>
+    </div>
+    <a href="https://payhip.com/b/WSuyb" class="payhip-buy-button" data-theme="none" data-product="WSuyb"
+       style="display:block;background:linear-gradient(135deg,#1B4332,#2D6A4F);color:#fff;padding:15px;border-radius:14px;text-decoration:none;font-weight:800;font-size:16px;margin-bottom:12px;box-shadow:0 8px 30px rgba(27,67,50,.4)">
+      💎 Oui, je prends le Pack Complet →
+    </a>
+    <button onclick="document.getElementById('upsell-modal').style.display='none'"
+      style="background:none;border:none;color:#6B7280;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif">
+      Non merci, je garde mon choix actuel
+    </button>
+  </div>
+</div>
+
+<div style="max-width:1100px;margin:0 auto;padding:0 28px 40px">
+  <div style="background:linear-gradient(135deg,rgba(244,132,95,.15),rgba(244,132,95,.05));border:1px solid rgba(244,132,95,.3);border-radius:20px;padding:28px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px">
+    <div>
+      <div style="font-size:12px;font-weight:700;letter-spacing:1.5px;color:#F4845F;margin-bottom:6px">💰 CODE PROMO EXCLUSIF</div>
+      <div style="font-family:'DM Serif Display',serif;font-size:22px;color:#F9FAFB;margin-bottom:4px">-20% sur toute la boutique</div>
+      <div style="font-size:13px;color:#9CA3AF">Entrez le code au moment du paiement</div>
+    </div>
+    <div style="text-align:center">
+      <div id="promo-code" style="background:rgba(244,132,95,.2);border:2px dashed #F4845F;border-radius:12px;padding:12px 24px;font-size:22px;font-weight:800;color:#F4845F;letter-spacing:3px;cursor:pointer" onclick="copyPromo()">
+        TIKTOK20
+      </div>
+      <div id="copy-msg" style="font-size:11px;color:#52B788;margin-top:6px;opacity:0;transition:.3s">✓ Code copié !</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  © 2025 FitGuides Pro · Guides numériques · Tous droits réservés<br>
+  contact@fitguides.fr · Remboursement garanti 30 jours
+</footer>
+
+<div id="toast"></div>
+
+<script>
+const payhipLinks = {
+  1: 'https://payhip.com/b/Las5h',
+  2: 'https://payhip.com/b/sh5wC',
+  3: 'https://payhip.com/b/o4T8Z',
+  4: 'https://payhip.com/b/WSuyb',
+};
+
+const payhipCodes = ['Las5h','sh5wC','o4T8Z','WSuyb'];
+
+const products = [
+  { id:1, name:"Guide Perte de Poids 30 Jours", sub:"Nutrition + Sport à la maison",
+    price:12.99, old:24.99, badge:"BEST-SELLER", badgeColor:"#F4845F",
+    emoji:"🔥", pages:"47 pages", rating:4.9, reviews:318, accent:"#52B788",
+    bg:"linear-gradient(135deg,#1B4332,#52B78855)",
+    checks:["Plan repas 7 jours","20 exercices sans matériel","5 recettes minceur","Suivi de progression"],
+    desc:"Programme complet avec plan alimentaire, exercices et recettes. Résultats visibles en 2 semaines." },
+  { id:2, name:"Bible de la Nutrition Saine", sub:"200+ recettes équilibrées",
+    price:9.99, old:19.99, badge:"NOUVEAU", badgeColor:"#3B82F6",
+    emoji:"🥗", pages:"82 pages", rating:4.8, reviews:142, accent:"#60A5FA",
+    bg:"linear-gradient(135deg,#1E3A5F,#60A5FA55)",
+    checks:["200+ recettes détaillées","Valeurs nutritionnelles","Listes de courses","Index par objectif"],
+    desc:"200 recettes classées par objectif avec valeurs nutritionnelles détaillées." },
+  { id:3, name:"Programme HIIT 8 Semaines", sub:"Cardio & Renforcement intense",
+    price:14.99, old:29.99, badge:"POPULAIRE", badgeColor:"#7C3AED",
+    emoji:"⚡", pages:"56 pages", rating:4.9, reviews:207, accent:"#A78BFA",
+    bg:"linear-gradient(135deg,#3B1F5E,#A78BFA55)",
+    checks:["8 semaines progressives","Niveaux débutant→avancé","Tracker de performance","Vidéos QR code"],
+    desc:"8 semaines de HIIT progressif sans équipement. Séances de 20 à 45 min." },
+  { id:4, name:"Pack Complet Transformation", sub:"Les 3 guides réunis",
+    price:24.99, old:57.97, badge:"ÉCONOMIE -57%", badgeColor:"#DC2626",
+    emoji:"💎", pages:"185 pages", rating:5.0, reviews:89, accent:"#FCD34D",
+    bg:"linear-gradient(135deg,#78350F,#FCD34D55)",
+    checks:["3 guides complets","Journal de bord PDF","Planning mural","Support email 30 jours"],
+    desc:"L'offre ultime : les 3 guides + 2 bonus exclusifs inclus." },
+];
+
+const reviewsData = [
+  { name:"Sophie M.", stars:5, text:"Incroyable ! -8kg en 6 semaines. Les recettes sont délicieuses et simples.", av:"SM" },
+  { name:"Lucas R.", stars:5, text:"Le meilleur investissement. Programme clair, progressif. J'ai enfin des abdos !", av:"LR" },
+  { name:"Amina K.", stars:5, text:"Très complet pour 12€. Le plan repas m'a sauvé la mise. Merci !", av:"AK" },
+  { name:"Pierre D.", stars:4, text:"Guide sérieux avec de vraies explications scientifiques. Je recommande à 100%.", av:"PD" },
+];
+
+const grid = document.getElementById('products-grid');
+products.forEach((p, i) => {
+  const disc = Math.round((1 - p.price/p.old)*100);
+  const starsHtml = [1,2,3,4,5].map(s=>`<span class="star">${s<=Math.round(p.rating)?'★':'☆'}</span>`).join('');
+  grid.innerHTML += `
+  <div class="card" style="--accent:${p.accent};animation:fadeIn .6s ease ${i*.1}s both">
+    <div class="card-top" style="background:${p.bg}">
+      <div class="badge" style="background:${p.badgeColor}">${p.badge}</div>
+      <div class="disc">-${disc}%</div>
+      <span class="emoji">${p.emoji}</span>
+      <div class="pages">${p.pages} · PDF téléchargeable</div>
+    </div>
+    <div class="card-body">
+      <div class="card-name">${p.name}</div>
+      <div class="card-sub" style="color:${p.accent}">${p.sub}</div>
+      <div class="card-desc">${p.desc}</div>
+      <div class="checks">${p.checks.map(c=>`<div><span class="chk" style="color:${p.accent}">✓</span>${c}</div>`).join('')}</div>
+      <div class="stars">${starsHtml} ${p.rating} (${p.reviews} avis)</div>
+      <div class="price-row">
+        <span class="price">${p.price.toFixed(2)}€</span>
+        <span class="old-price">${p.old.toFixed(2)}€</span>
+      </div>
+      <a href="https://payhip.com/b/${payhipCodes[i]}"
+         class="payhip-buy-button add-btn"
+         data-theme="none"
+         data-product="${payhipCodes[i]}"
+         style="background:${p.accent};display:block;text-align:center;text-decoration:none;color:#fff">
+        💳 Acheter maintenant
+      </a>
+    </div>
+  </div>`;
+});
+
+const revGrid = document.getElementById('reviews-grid');
+reviewsData.forEach(r => {
+  const stars = [1,2,3,4,5].map(s=>`<span class="star">${s<=r.stars?'★':'☆'}</span>`).join('');
+  revGrid.innerHTML += `
+  <div class="rev-card">
+    <div class="rev-head">
+      <div class="avatar">${r.av}</div>
+      <div><div class="rev-name">${r.name}</div><div>${stars}</div></div>
+    </div>
+    <div class="rev-text">"${r.text}"</div>
+  </div>`;
+});
+
+function updateCountdown() {
+  const now = new Date();
+  const end = new Date();
+  end.setHours(23, 59, 59, 0);
+  const diff = end - now;
+  const h = Math.floor(diff/3600000).toString().padStart(2,'0');
+  const m = Math.floor((diff%3600000)/60000).toString().padStart(2,'0');
+  const s = Math.floor((diff%60000)/1000).toString().padStart(2,'0');
+  const el = document.getElementById('countdown');
+  if(el) el.textContent = h+':'+m+':'+s;
+}
+setInterval(updateCountdown, 1000);
+updateCountdown();
+
+function copyPromo() {
+  navigator.clipboard.writeText('TIKTOK20').then(() => {
+    const msg = document.getElementById('copy-msg');
+    msg.style.opacity = '1';
+    setTimeout(() => msg.style.opacity = '0', 2000);
+  });
+}
+
+let toastTimer;
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.innerHTML='✅ '+msg;
+  t.style.display='flex';
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>t.style.display='none',2800);
+}
+</script>
+</body>
+</html>
