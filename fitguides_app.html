@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<meta name="theme-color" content="#030712"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<title>FitGuides Pro</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --green: #52B788;
+  --green-dark: #1B4332;
+  --green-mid: #2D6A4F;
+  --orange: #F4845F;
+  --purple: #A78BFA;
+  --blue: #60A5FA;
+  --gold: #FCD34D;
+  --dark: #030712;
+  --card: #0F172A;
+  --card2: #111827;
+  --border: #1F2937;
+  --text: #F9FAFB;
+  --muted: #6B7280;
+  --light: #D1D5DB;
+}
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+html, body { height:100%; overflow:hidden; background:var(--dark); font-family:'DM Sans',sans-serif; color:var(--text); }
+
+/* ── SCREENS ── */
+.screen { position:fixed; inset:0; display:none; flex-direction:column; overflow:hidden; }
+.screen.active { display:flex; }
+
+/* ── SPLASH ── */
+#splash {
+  background: radial-gradient(ellipse 80% 60% at 50% 30%, rgba(27,67,50,0.5), transparent 70%), var(--dark);
+  align-items:center; justify-content:center; flex-direction:column; gap:20px;
+}
+.splash-logo { font-family:'Bebas Neue',sans-serif; font-size:72px; color:#fff; letter-spacing:3px; line-height:1; text-align:center; }
+.splash-logo span { color:var(--green); }
+.splash-sub { font-size:13px; color:var(--muted); letter-spacing:3px; text-transform:uppercase; }
+.splash-bar { width:200px; height:3px; background:var(--border); border-radius:99px; margin-top:40px; overflow:hidden; }
+.splash-bar-fill { height:100%; background:linear-gradient(90deg,var(--green-dark),var(--green)); border-radius:99px; animation:load 1.8s ease forwards; }
+@keyframes load { from{width:0} to{width:100%} }
+
+/* ── AUTH ── */
+#auth {
+  background: radial-gradient(ellipse 70% 50% at 50% 20%, rgba(27,67,50,0.35), transparent 65%), var(--dark);
+  justify-content:flex-end;
+}
+.auth-hero { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px; padding:40px; }
+.auth-logo { font-family:'Bebas Neue',sans-serif; font-size:52px; color:#fff; letter-spacing:2px; }
+.auth-logo span { color:var(--green); }
+.auth-tagline { font-size:14px; color:var(--muted); text-align:center; line-height:1.6; }
+.auth-stats { display:flex; gap:32px; margin-top:16px; }
+.auth-stat { text-align:center; }
+.auth-stat strong { display:block; font-family:'Bebas Neue',sans-serif; font-size:28px; color:var(--green); }
+.auth-stat span { font-size:11px; color:var(--muted); }
+.auth-sheet { background:var(--card); border-radius:28px 28px 0 0; padding:32px 24px 48px; display:flex; flex-direction:column; gap:16px; }
+.auth-title { font-family:'Syne',sans-serif; font-size:22px; font-weight:800; }
+.auth-toggle { display:flex; gap:0; background:var(--dark); border-radius:12px; padding:4px; margin-bottom:4px; }
+.auth-toggle button { flex:1; padding:10px; border:none; background:none; color:var(--muted); font-family:'DM Sans',sans-serif; font-size:14px; font-weight:600; border-radius:9px; cursor:pointer; transition:.2s; }
+.auth-toggle button.active { background:var(--green); color:#fff; }
+.input-group { display:flex; flex-direction:column; gap:8px; }
+.input-group label { font-size:12px; font-weight:600; color:var(--muted); letter-spacing:1px; text-transform:uppercase; }
+.input-group input { background:var(--dark); border:1.5px solid var(--border); border-radius:14px; padding:14px 16px; font-size:15px; color:var(--text); font-family:'DM Sans',sans-serif; outline:none; transition:.2s; }
+.input-group input:focus { border-color:var(--green); }
+.btn-primary { width:100%; padding:16px; background:linear-gradient(135deg,var(--green-dark),var(--green-mid)); border:none; border-radius:14px; color:#fff; font-size:16px; font-weight:700; font-family:'DM Sans',sans-serif; cursor:pointer; letter-spacing:.3px; transition:.2s; }
+.btn-primary:active { transform:scale(0.98); }
+.auth-or { text-align:center; color:var(--muted); font-size:13px; position:relative; }
+.auth-or::before, .auth-or::after { content:''; position:absolute; top:50%; width:38%; height:1px; background:var(--border); }
+.auth-or::before { left:0; } .auth-or::after { right:0; }
+
+/* ── MAIN APP ── */
+#app { background:var(--dark); }
+
+/* Top bar */
+.topbar { padding:52px 20px 16px; display:flex; align-items:center; justify-content:space-between; flex-shrink:0; }
+.topbar-left { display:flex; flex-direction:column; gap:2px; }
+.topbar-greeting { font-size:13px; color:var(--muted); }
+.topbar-name { font-family:'Syne',sans-serif; font-size:20px; font-weight:800; }
+.topbar-avatar { width:42px; height:42px; border-radius:14px; background:linear-gradient(135deg,var(--green-dark),var(--green)); display:flex; align-items:center; justify-content:center; font-weight:800; font-size:16px; }
+.topbar-notif { position:relative; }
+.notif-dot { position:absolute; top:-2px; right:-2px; width:10px; height:10px; background:var(--orange); border-radius:50%; border:2px solid var(--dark); }
+
+/* Page content */
+.page-content { flex:1; overflow-y:auto; padding:0 20px 100px; scroll-behavior:smooth; }
+.page-content::-webkit-scrollbar { display:none; }
+
+/* Section headers */
+.section-header { display:flex; align-items:center; justify-content:space-between; margin:24px 0 14px; }
+.section-title { font-family:'Syne',sans-serif; font-size:17px; font-weight:800; }
+.section-link { font-size:13px; color:var(--green); font-weight:600; }
+
+/* ── HERO CARD ── */
+.hero-card {
+  background: linear-gradient(135deg, var(--green-dark) 0%, #0d3320 100%);
+  border-radius:22px; padding:24px; margin-bottom:8px; position:relative; overflow:hidden;
+}
+.hero-card::before {
+  content:''; position:absolute; top:-40px; right:-40px; width:160px; height:160px;
+  background:radial-gradient(circle,rgba(82,183,136,0.25),transparent 70%); border-radius:50%;
+}
+.hero-card-label { font-size:11px; font-weight:700; color:rgba(82,183,136,0.7); letter-spacing:2px; text-transform:uppercase; margin-bottom:8px; }
+.hero-card-title { font-family:'Syne',sans-serif; font-size:22px; font-weight:800; line-height:1.2; margin-bottom:16px; }
+.hero-card-title em { color:var(--green); font-style:normal; }
+.hero-progress { margin-bottom:12px; }
+.hero-progress-label { display:flex; justify-content:space-between; font-size:12px; color:var(--light); margin-bottom:6px; }
+.hero-progress-bar { height:6px; background:rgba(255,255,255,0.1); border-radius:99px; overflow:hidden; }
+.hero-progress-fill { height:100%; background:linear-gradient(90deg,var(--green-dark),var(--green)); border-radius:99px; }
+.hero-btn { display:inline-flex; align-items:center; gap:8px; background:var(--green); border-radius:12px; padding:10px 18px; font-size:13px; font-weight:700; color:#fff; border:none; cursor:pointer; }
+
+/* ── QUICK STATS ── */
+.quick-stats { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:8px; }
+.stat-card { background:var(--card); border-radius:18px; padding:18px; border:1px solid var(--border); }
+.stat-card-icon { font-size:22px; margin-bottom:10px; }
+.stat-card-val { font-family:'Bebas Neue',sans-serif; font-size:32px; line-height:1; margin-bottom:3px; }
+.stat-card-label { font-size:12px; color:var(--muted); }
+.stat-card.green .stat-card-val { color:var(--green); }
+.stat-card.orange .stat-card-val { color:var(--orange); }
+.stat-card.purple .stat-card-val { color:var(--purple); }
+.stat-card.blue .stat-card-val { color:var(--blue); }
+
+/* ── PRODUCT CARDS ── */
+.products-scroll { display:flex; gap:14px; overflow-x:auto; padding-bottom:8px; margin:0 -20px; padding-left:20px; padding-right:20px; }
+.products-scroll::-webkit-scrollbar { display:none; }
+.product-card { flex-shrink:0; width:200px; background:var(--card); border-radius:20px; overflow:hidden; border:1px solid var(--border); }
+.product-card-top { padding:20px; min-height:110px; position:relative; display:flex; flex-direction:column; justify-content:flex-end; }
+.product-badge { position:absolute; top:12px; left:12px; font-size:9px; font-weight:800; letter-spacing:1px; padding:3px 9px; border-radius:99px; color:#fff; text-transform:uppercase; }
+.product-emoji { font-size:40px; text-align:center; display:block; }
+.product-card-body { padding:14px; }
+.product-card-name { font-family:'Syne',sans-serif; font-size:14px; font-weight:700; line-height:1.3; margin-bottom:4px; }
+.product-price-row { display:flex; align-items:baseline; gap:6px; margin-bottom:10px; }
+.product-price { font-size:20px; font-weight:800; }
+.product-old-price { font-size:12px; color:var(--muted); text-decoration:line-through; }
+.product-buy { width:100%; padding:10px; border:none; border-radius:10px; font-size:13px; font-weight:700; font-family:'DM Sans',sans-serif; cursor:pointer; color:#fff; transition:.2s; }
+.product-buy:active { transform:scale(0.97); }
+
+/* ── TRACKER ── */
+.tracker-card { background:var(--card); border-radius:22px; padding:20px; border:1px solid var(--border); margin-bottom:12px; }
+.tracker-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; }
+.tracker-title { font-family:'Syne',sans-serif; font-size:16px; font-weight:800; }
+.tracker-edit { font-size:12px; color:var(--green); font-weight:600; background:none; border:none; cursor:pointer; color:var(--green); }
+
+/* Weight chart */
+.weight-chart { height:100px; display:flex; align-items:flex-end; gap:6px; padding-bottom:4px; border-bottom:1px solid var(--border); margin-bottom:12px; }
+.weight-bar { flex:1; border-radius:6px 6px 0 0; min-height:8px; transition:.3s; cursor:pointer; }
+.weight-bar:hover { opacity:0.8; }
+.weight-labels { display:flex; gap:6px; }
+.weight-label { flex:1; font-size:9px; color:var(--muted); text-align:center; }
+
+/* Metrics row */
+.metrics-row { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+.metric-item { text-align:center; padding:12px 8px; background:var(--dark); border-radius:12px; }
+.metric-val { font-family:'Bebas Neue',sans-serif; font-size:22px; line-height:1; color:var(--green); }
+.metric-label { font-size:10px; color:var(--muted); margin-top:2px; }
+
+/* Input modal */
+.modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.7); backdrop-filter:blur(8px); z-index:1000; display:none; align-items:flex-end; }
+.modal-overlay.open { display:flex; }
+.modal-sheet { width:100%; background:var(--card); border-radius:28px 28px 0 0; padding:28px 24px 48px; display:flex; flex-direction:column; gap:16px; }
+.modal-handle { width:40px; height:4px; background:var(--border); border-radius:99px; margin:0 auto 8px; }
+.modal-title { font-family:'Syne',sans-serif; font-size:20px; font-weight:800; }
+.modal-subtitle { font-size:14px; color:var(--muted); margin-top:-8px; }
+.modal-input-row { display:flex; gap:12px; }
+.modal-input-row .input-group { flex:1; }
+.btn-secondary { width:100%; padding:16px; background:var(--dark); border:1.5px solid var(--border); border-radius:14px; color:var(--muted); font-size:15px; font-weight:600; font-family:'DM Sans',sans-serif; cursor:pointer; }
+
+/* ── SHOP TAB ── */
+.shop-header { padding:52px 20px 0; flex-shrink:0; }
+.shop-title { font-family:'Bebas Neue',sans-serif; font-size:48px; letter-spacing:1px; line-height:1; }
+.shop-title span { color:var(--green); }
+.shop-sub { font-size:13px; color:var(--muted); margin-top:4px; margin-bottom:20px; }
+.promo-banner { background:linear-gradient(135deg,var(--orange),#e05c2e); border-radius:16px; padding:14px 18px; display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; }
+.promo-text { font-size:13px; font-weight:700; }
+.promo-code { background:rgba(255,255,255,0.2); border-radius:8px; padding:4px 10px; font-size:13px; font-weight:800; letter-spacing:1px; }
+.shop-filters { display:flex; gap:8px; margin-bottom:20px; overflow-x:auto; }
+.shop-filters::-webkit-scrollbar { display:none; }
+.filter-pill { flex-shrink:0; padding:8px 16px; border-radius:99px; border:1.5px solid var(--border); font-size:13px; font-weight:600; background:none; color:var(--muted); cursor:pointer; font-family:'DM Sans',sans-serif; transition:.2s; }
+.filter-pill.active { background:var(--green); border-color:var(--green); color:#fff; }
+.shop-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.shop-card { background:var(--card); border-radius:20px; overflow:hidden; border:1px solid var(--border); }
+.shop-card-top { padding:20px 16px 14px; display:flex; flex-direction:column; align-items:center; gap:8px; position:relative; }
+.shop-card-emoji { font-size:44px; }
+.shop-card-badge { position:absolute; top:10px; left:10px; font-size:9px; font-weight:800; padding:3px 8px; border-radius:99px; color:#fff; text-transform:uppercase; }
+.shop-card-body { padding:12px 14px 14px; }
+.shop-card-name { font-family:'Syne',sans-serif; font-size:13px; font-weight:700; line-height:1.3; margin-bottom:6px; }
+.shop-card-stars { font-size:11px; color:var(--gold); margin-bottom:6px; }
+.shop-card-price-row { display:flex; align-items:center; justify-content:space-between; }
+.shop-card-price { font-size:18px; font-weight:800; }
+.shop-card-old { font-size:11px; color:var(--muted); text-decoration:line-through; }
+.shop-card-btn { padding:9px 12px; border:none; border-radius:10px; font-size:12px; font-weight:700; font-family:'DM Sans',sans-serif; color:#fff; cursor:pointer; }
+
+/* ── PROFILE TAB ── */
+.profile-header { padding:52px 20px 24px; flex-shrink:0; }
+.profile-card { background:var(--card); border-radius:22px; padding:24px; border:1px solid var(--border); margin-bottom:20px; display:flex; align-items:center; gap:16px; }
+.profile-avatar { width:64px; height:64px; border-radius:20px; background:linear-gradient(135deg,var(--green-dark),var(--green)); display:flex; align-items:center; justify-content:center; font-size:24px; font-weight:800; flex-shrink:0; }
+.profile-info { flex:1; }
+.profile-name { font-family:'Syne',sans-serif; font-size:18px; font-weight:800; }
+.profile-email { font-size:13px; color:var(--muted); margin-top:2px; }
+.profile-badge { display:inline-flex; align-items:center; gap:4px; background:rgba(82,183,136,0.15); border:1px solid rgba(82,183,136,0.3); border-radius:99px; padding:3px 10px; font-size:11px; font-weight:700; color:var(--green); margin-top:6px; }
+.menu-list { background:var(--card); border-radius:22px; border:1px solid var(--border); overflow:hidden; margin-bottom:14px; }
+.menu-item { display:flex; align-items:center; gap:14px; padding:18px 20px; border-bottom:1px solid var(--border); cursor:pointer; transition:.2s; }
+.menu-item:last-child { border-bottom:none; }
+.menu-item:active { background:rgba(255,255,255,0.03); }
+.menu-icon { width:38px; height:38px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+.menu-text { flex:1; }
+.menu-label { font-size:15px; font-weight:600; }
+.menu-sub { font-size:12px; color:var(--muted); margin-top:1px; }
+.menu-arrow { color:var(--muted); font-size:18px; }
+
+/* ── MESSAGES TAB ── */
+.messages-header { padding:52px 20px 16px; flex-shrink:0; }
+.messages-title { font-family:'Bebas Neue',sans-serif; font-size:42px; letter-spacing:1px; }
+.chat-list { overflow-y:auto; padding:0 20px 100px; flex:1; }
+.chat-item { display:flex; gap:14px; align-items:center; padding:16px 0; border-bottom:1px solid rgba(255,255,255,0.05); cursor:pointer; }
+.chat-avatar { width:48px; height:48px; border-radius:16px; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:16px; flex-shrink:0; }
+.chat-info { flex:1; min-width:0; }
+.chat-name { font-size:15px; font-weight:700; }
+.chat-preview { font-size:13px; color:var(--muted); margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.chat-meta { text-align:right; flex-shrink:0; }
+.chat-time { font-size:11px; color:var(--muted); }
+.chat-unread { width:20px; height:20px; background:var(--green); border-radius:99px; font-size:11px; font-weight:800; display:flex; align-items:center; justify-content:center; margin-top:4px; margin-left:auto; }
+
+/* Chat view */
+#chatView { background:var(--dark); }
+.chat-topbar { padding:52px 20px 16px; display:flex; align-items:center; gap:14px; flex-shrink:0; border-bottom:1px solid var(--border); }
+.chat-back { font-size:24px; cursor:pointer; background:none; border:none; color:var(--text); }
+.chat-topbar-avatar { width:40px; height:40px; border-radius:14px; display:flex; align-items:center; justify-content:center; font-weight:800; }
+.chat-topbar-name { font-family:'Syne',sans-serif; font-size:16px; font-weight:800; }
+.chat-topbar-status { font-size:12px; color:var(--green); }
+.chat-messages { flex:1; overflow-y:auto; padding:20px; display:flex; flex-direction:column; gap:12px; }
+.chat-messages::-webkit-scrollbar { display:none; }
+.msg { max-width:80%; display:flex; flex-direction:column; gap:4px; }
+.msg.me { align-self:flex-end; align-items:flex-end; }
+.msg.them { align-self:flex-start; align-items:flex-start; }
+.msg-bubble { padding:12px 16px; border-radius:18px; font-size:14px; line-height:1.5; }
+.msg.me .msg-bubble { background:var(--green-dark); color:#fff; border-radius:18px 18px 4px 18px; }
+.msg.them .msg-bubble { background:var(--card2); color:var(--text); border-radius:18px 18px 18px 4px; }
+.msg-time { font-size:10px; color:var(--muted); }
+.chat-input-bar { padding:12px 20px 32px; display:flex; gap:10px; align-items:center; border-top:1px solid var(--border); flex-shrink:0; }
+.chat-input { flex:1; background:var(--card); border:1.5px solid var(--border); border-radius:24px; padding:12px 18px; font-size:15px; color:var(--text); font-family:'DM Sans',sans-serif; outline:none; }
+.chat-send { width:44px; height:44px; border-radius:14px; background:var(--green); border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+
+/* ── BOTTOM NAV ── */
+.bottom-nav { position:fixed; bottom:0; left:0; right:0; background:rgba(15,23,42,0.95); backdrop-filter:blur(20px); border-top:1px solid var(--border); display:flex; padding:12px 0 28px; z-index:100; }
+.nav-item { flex:1; display:flex; flex-direction:column; align-items:center; gap:4px; cursor:pointer; padding:4px 0; }
+.nav-icon { font-size:22px; transition:.2s; }
+.nav-label { font-size:10px; font-weight:600; color:var(--muted); transition:.2s; }
+.nav-item.active .nav-icon { transform:scale(1.1); }
+.nav-item.active .nav-label { color:var(--green); }
+
+/* Purchase modal */
+.purchase-modal { position:fixed; inset:0; background:rgba(0,0,0,0.85); backdrop-filter:blur(12px); z-index:2000; display:none; align-items:flex-end; }
+.purchase-modal.open { display:flex; }
+.purchase-sheet { width:100%; background:var(--card); border-radius:28px 28px 0 0; padding:28px 24px 52px; }
+.purchase-product-preview { display:flex; align-items:center; gap:16px; padding:20px; background:var(--dark); border-radius:18px; margin-bottom:20px; }
+.purchase-emoji { font-size:40px; }
+.purchase-product-name { font-family:'Syne',sans-serif; font-size:16px; font-weight:800; }
+.purchase-product-price { font-size:22px; font-weight:800; margin-top:4px; }
+.stripe-form { display:flex; flex-direction:column; gap:14px; }
+.stripe-field { background:var(--dark); border:1.5px solid var(--border); border-radius:14px; padding:14px 16px; }
+.stripe-field label { display:block; font-size:11px; font-weight:700; color:var(--muted); letter-spacing:1px; text-transform:uppercase; margin-bottom:6px; }
+.stripe-field input { background:none; border:none; outline:none; color:var(--text); font-size:15px; font-family:'DM Sans',sans-serif; width:100%; }
+.stripe-row { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.secure-note { display:flex; align-items:center; gap:6px; font-size:12px; color:var(--muted); justify-content:center; }
+.success-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.9); z-index:3000; display:none; align-items:center; justify-content:center; flex-direction:column; gap:16px; }
+.success-overlay.open { display:flex; }
+.success-check { font-size:72px; }
+.success-title { font-family:'Syne',sans-serif; font-size:26px; font-weight:800; }
+.success-sub { font-size:14px; color:var(--muted); text-align:center; max-width:260px; line-height:1.6; }
+
+/* Tabs content */
+.tab-pane { display:none; flex-direction:column; height:100%; }
+.tab-pane.active { display:flex; }
+
+/* Toast */
+#toast { position:fixed; bottom:100px; left:50%; transform:translateX(-50%) translateY(20px); background:var(--card2); border:1px solid var(--border); border-radius:14px; padding:12px 20px; font-size:14px; font-weight:600; z-index:5000; opacity:0; transition:.3s; white-space:nowrap; }
+#toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+
+/* Loading spinner */
+.spinner { width:20px; height:20px; border:2px solid rgba(255,255,255,0.2); border-top-color:#fff; border-radius:50%; animation:spin .7s linear infinite; display:inline-block; }
+@keyframes spin { to { transform:rotate(360deg); } }
+
+/* Animations */
+@keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+.fade-up { animation:fadeUp .4s ease forwards; }
+</style>
+</head>
+<body>
+
+<!-- SPLASH -->
+<div class="screen active" id="splash">
+  <div class="splash-logo">FIT<span>GUIDES</span><br/>PRO</div>
+  <div class="splash-sub">Transformez votre corps</div>
+  <div class="splash-bar"><div class="splash-bar-fill"></div></div>
+</div>
+
+<!-- AUTH -->
+<div class="screen" id="auth">
+  <div class="auth-hero">
+    <div class="auth-logo">FIT<span>GUIDES</span> PRO</div>
+    <div class="auth-tagline">La plateforme de transformation corporelle<br/>la plus complète de France</div>
+    <div class="auth-stats">
+      <div class="auth-stat"><strong>4 847</strong><span>Clients</span></div>
+      <div class="auth-stat"><strong>4.9★</strong><span>Note</span></div>
+      <div class="auth-stat"><strong>-8kg</strong><span>Résultat moy.</span></div>
+    </div>
+  </div>
+  <div class="auth-sheet">
+    <div class="auth-title">Commencer</div>
+    <div class="auth-toggle">
+      <button class="active" onclick="toggleAuth('login')">Connexion</button>
+      <button onclick="toggleAuth('register')">Inscription</button>
+    </div>
+    <div id="auth-form">
+      <div class="input-group" id="name-group" style="display:none;margin-bottom:12px;">
+        <label>Prénom</label>
+        <input type="text" id="inp-name" placeholder="Sophie"/>
+      </div>
+      <div class="input-group" style="margin-bottom:12px;">
+        <label>Email</label>
+        <input type="email" id="inp-email" placeholder="sophie@email.com"/>
+      </div>
+      <div class="input-group" style="margin-bottom:16px;">
+        <label>Mot de passe</label>
+        <input type="password" id="inp-pass" placeholder="••••••••"/>
+      </div>
+      <button class="btn-primary" onclick="doAuth()" id="auth-btn">Se connecter</button>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div class="screen" id="app">
+
+  <!-- HOME TAB -->
+  <div class="tab-pane active" id="tab-home">
+    <div class="topbar">
+      <div class="topbar-left">
+        <div class="topbar-greeting">Bonjour 👋</div>
+        <div class="topbar-name" id="user-display-name">Sophie</div>
+      </div>
+      <div class="topbar-notif topbar-avatar" id="user-avatar" onclick="switchTab('profile')">S</div>
+    </div>
+
+    <div class="page-content">
+      <!-- Hero card -->
+      <div class="hero-card fade-up">
+        <div class="hero-card-label">⚡ Programme actif</div>
+        <div class="hero-card-title">HIIT <em>8 Semaines</em><br/>Phase 2 — Activation</div>
+        <div class="hero-progress">
+          <div class="hero-progress-label"><span>Semaine 3/8</span><span>37%</span></div>
+          <div class="hero-progress-bar"><div class="hero-progress-fill" style="width:37%"></div></div>
+        </div>
+        <button class="hero-btn" onclick="switchTab('tracker')">📊 Voir ma progression</button>
+      </div>
+
+      <!-- Quick stats -->
+      <div class="section-header">
+        <div class="section-title">Cette semaine</div>
+        <div class="section-link" onclick="switchTab('tracker')">Tout voir</div>
+      </div>
+      <div class="quick-stats">
+        <div class="stat-card green">
+          <div class="stat-card-icon">⚡</div>
+          <div class="stat-card-val" id="stat-seances">4</div>
+          <div class="stat-card-label">Séances</div>
+        </div>
+        <div class="stat-card orange">
+          <div class="stat-card-icon">🔥</div>
+          <div class="stat-card-val" id="stat-calories">1 240</div>
+          <div class="stat-card-label">Kcal brûlées</div>
+        </div>
+        <div class="stat-card purple">
+          <div class="stat-card-icon">⚖️</div>
+          <div class="stat-card-val" id="stat-poids">68.4</div>
+          <div class="stat-card-label">Poids (kg)</div>
+        </div>
+        <div class="stat-card blue">
+          <div class="stat-card-icon">📉</div>
+          <div class="stat-card-val" id="stat-perdu">-3.6</div>
+          <div class="stat-card-label">kg perdus</div>
+        </div>
+      </div>
+
+      <!-- Featured products -->
+      <div class="section-header">
+        <div class="section-title">Guides recommandés</div>
+        <div class="section-link" onclick="switchTab('shop')">Voir tout</div>
+      </div>
+      <div class="products-scroll" id="home-products"></div>
+
+      <!-- Message rapide -->
+      <div class="section-header">
+        <div class="section-title">Coach</div>
+        <div class="section-link" onclick="switchTab('messages')">Voir tout</div>
+      </div>
+      <div class="chat-item" style="padding:16px;background:var(--card);border-radius:18px;border:1px solid var(--border);" onclick="openChat('coach')">
+        <div class="chat-avatar" style="background:linear-gradient(135deg,#1B4332,#52B788);">💪</div>
+        <div class="chat-info">
+          <div class="chat-name">FitGuides Coach</div>
+          <div class="chat-preview">Super progression cette semaine ! Continue comme ça 🔥</div>
+        </div>
+        <div class="chat-meta">
+          <div class="chat-time">14:02</div>
+          <div class="chat-unread">1</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SHOP TAB -->
+  <div class="tab-pane" id="tab-shop">
+    <div class="shop-header">
+      <div class="shop-title">NOTRE<br/><span>BOUTIQUE</span></div>
+      <div class="shop-sub">Guides PDF • Téléchargement immédiat</div>
+      <div class="promo-banner">
+        <div>
+          <div class="promo-text">🔥 Code promo actif</div>
+          <div style="font-size:12px;opacity:.8;margin-top:2px;">-20% sur tout</div>
+        </div>
+        <div class="promo-code">TIKTOK20</div>
+      </div>
+      <div class="shop-filters">
+        <button class="filter-pill active" onclick="filterShop('all',this)">Tous</button>
+        <button class="filter-pill" onclick="filterShop('nutrition',this)">Nutrition</button>
+        <button class="filter-pill" onclick="filterShop('sport',this)">Sport</button>
+        <button class="filter-pill" onclick="filterShop('pack',this)">Packs</button>
+      </div>
+    </div>
+    <div class="page-content" style="padding-top:0;">
+      <div class="shop-grid" id="shop-grid"></div>
+    </div>
+  </div>
+
+  <!-- TRACKER TAB -->
+  <div class="tab-pane" id="tab-tracker">
+    <div class="topbar">
+      <div class="topbar-left">
+        <div class="topbar-greeting">Ma progression</div>
+        <div class="topbar-name">Suivi complet</div>
+      </div>
+      <button style="background:var(--green);border:none;border-radius:12px;padding:8px 14px;color:#fff;font-size:13px;font-weight:700;cursor:pointer;" onclick="openTrackerModal()">+ Ajouter</button>
+    </div>
+    <div class="page-content">
+
+      <!-- Weight chart -->
+      <div class="tracker-card">
+        <div class="tracker-header">
+          <div class="tracker-title">📉 Poids</div>
+          <button class="tracker-edit" onclick="openTrackerModal()">Mettre à jour</button>
+        </div>
+        <div class="weight-chart" id="weight-chart"></div>
+        <div class="weight-labels" id="weight-labels"></div>
+        <div class="metrics-row" style="margin-top:14px;">
+          <div class="metric-item">
+            <div class="metric-val" id="m-depart">72<span style="font-size:14px;">kg</span></div>
+            <div class="metric-label">Départ</div>
+          </div>
+          <div class="metric-item">
+            <div class="metric-val" id="m-actuel">68.4<span style="font-size:14px;">kg</span></div>
+            <div class="metric-label">Actuel</div>
+          </div>
+          <div class="metric-item">
+            <div class="metric-val" style="color:var(--orange);" id="m-perdu">-3.6<span style="font-size:14px;">kg</span></div>
+            <div class="metric-label">Perdu</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mesures -->
+      <div class="tracker-card">
+        <div class="tracker-header">
+          <div class="tracker-title">📏 Mesures</div>
+          <button class="tracker-edit" onclick="openMesuresModal()">Modifier</button>
+        </div>
+        <div class="metrics-row">
+          <div class="metric-item">
+            <div class="metric-val" id="m-taille">68<span style="font-size:14px;">cm</span></div>
+            <div class="metric-label">Tour de taille</div>
+          </div>
+          <div class="metric-item">
+            <div class="metric-val" id="m-hanches">90<span style="font-size:14px;">cm</span></div>
+            <div class="metric-label">Hanches</div>
+          </div>
+          <div class="metric-item">
+            <div class="metric-val" id="m-bras">28<span style="font-size:14px;">cm</span></div>
+            <div class="metric-label">Bras</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Séances -->
+      <div class="tracker-card">
+        <div class="tracker-header">
+          <div class="tracker-title">⚡ Séances</div>
+          <span style="font-size:13px;color:var(--muted);">Ce mois</span>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:6px;" id="seances-grid"></div>
+        <div style="display:flex;gap:16px;margin-top:14px;font-size:12px;color:var(--muted);">
+          <span style="display:flex;align-items:center;gap:6px;"><span style="width:10px;height:10px;background:var(--green);border-radius:3px;display:inline-block;"></span>Fait</span>
+          <span style="display:flex;align-items:center;gap:6px;"><span style="width:10px;height:10px;background:var(--border);border-radius:3px;display:inline-block;"></span>Prévu</span>
+        </div>
+      </div>
+
+      <!-- Guides achetés -->
+      <div class="section-header">
+        <div class="section-title">Mes guides</div>
+      </div>
+      <div id="my-guides"></div>
+    </div>
+  </div>
+
+  <!-- MESSAGES TAB -->
+  <div class="tab-pane" id="tab-messages">
+    <div class="messages-header">
+      <div class="messages-title">MESSAGES</div>
+    </div>
+    <div class="chat-list" id="chat-list"></div>
+  </div>
+
+  <!-- PROFILE TAB -->
+  <div class="tab-pane" id="tab-profile">
+    <div class="profile-header">
+      <div class="topbar-greeting">Mon compte</div>
+    </div>
+    <div class="page-content" style="padding-top:0;">
+      <div class="profile-card">
+        <div class="profile-avatar" id="profile-avatar">S</div>
+        <div class="profile-info">
+          <div class="profile-name" id="profile-name">Sophie M.</div>
+          <div class="profile-email" id="profile-email">sophie@email.com</div>
+          <div class="profile-badge">⭐ Membre Premium</div>
+        </div>
+      </div>
+
+      <div class="menu-list">
+        <div class="menu-item" onclick="switchTab('tracker')">
+          <div class="menu-icon" style="background:rgba(82,183,136,0.15);">📊</div>
+          <div class="menu-text"><div class="menu-label">Ma progression</div><div class="menu-sub">Poids, mesures, séances</div></div>
+          <div class="menu-arrow">›</div>
+        </div>
+        <div class="menu-item" onclick="switchTab('shop')">
+          <div class="menu-icon" style="background:rgba(244,132,95,0.15);">📖</div>
+          <div class="menu-text"><div class="menu-label">Mes guides</div><div class="menu-sub">3 guides achetés</div></div>
+          <div class="menu-arrow">›</div>
+        </div>
+        <div class="menu-item" onclick="switchTab('messages')">
+          <div class="menu-icon" style="background:rgba(96,165,250,0.15);">💬</div>
+          <div class="menu-text"><div class="menu-label">Messages</div><div class="menu-sub">1 nouveau message</div></div>
+          <div class="menu-arrow">›</div>
+        </div>
+        <div class="menu-item">
+          <div class="menu-icon" style="background:rgba(252,211,77,0.15);">🎁</div>
+          <div class="menu-text"><div class="menu-label">Code promo</div><div class="menu-sub">TIKTOK20 — -20%</div></div>
+          <div class="menu-arrow">›</div>
+        </div>
+      </div>
+
+      <div class="menu-list">
+        <div class="menu-item" onclick="editProfile()">
+          <div class="menu-icon" style="background:rgba(167,139,250,0.15);">⚙️</div>
+          <div class="menu-text"><div class="menu-label">Modifier le profil</div><div class="menu-sub">Nom, email, objectif</div></div>
+          <div class="menu-arrow">›</div>
+        </div>
+        <div class="menu-item" onclick="logout()">
+          <div class="menu-icon" style="background:rgba(248,113,113,0.15);">🚪</div>
+          <div class="menu-text"><div class="menu-label" style="color:#F87171;">Déconnexion</div></div>
+          <div class="menu-arrow">›</div>
+        </div>
+      </div>
+
+      <div style="text-align:center;padding:20px;font-size:12px;color:var(--muted);">
+        FitGuides Pro v1.0.0 • fitguides.vercel.app
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTTOM NAV -->
+  <nav class="bottom-nav">
+    <div class="nav-item active" onclick="switchTab('home')" id="nav-home">
+      <div class="nav-icon">🏠</div>
+      <div class="nav-label">Accueil</div>
+    </div>
+    <div class="nav-item" onclick="switchTab('shop')" id="nav-shop">
+      <div class="nav-icon">🛍️</div>
+      <div class="nav-label">Boutique</div>
+    </div>
+    <div class="nav-item" onclick="switchTab('tracker')" id="nav-tracker">
+      <div class="nav-icon">📊</div>
+      <div class="nav-label">Suivi</div>
+    </div>
+    <div class="nav-item" onclick="switchTab('messages')" id="nav-messages">
+      <div class="nav-icon">💬</div>
+      <div class="nav-label">Messages</div>
+    </div>
+    <div class="nav-item" onclick="switchTab('profile')" id="nav-profile">
+      <div class="nav-icon">👤</div>
+      <div class="nav-label">Profil</div>
+    </div>
+  </nav>
+</div>
+
+<!-- CHAT VIEW -->
+<div class="screen" id="chatView">
+  <div class="chat-topbar">
+    <button class="chat-back" onclick="closeChat()">←</button>
+    <div class="chat-topbar-avatar" id="chat-avatar" style="background:linear-gradient(135deg,#1B4332,#52B788);">💪</div>
+    <div>
+      <div class="chat-topbar-name" id="chat-name">FitGuides Coach</div>
+      <div class="chat-topbar-status">● En ligne</div>
+    </div>
+  </div>
+  <div class="chat-messages" id="chat-messages"></div>
+  <div class="chat-input-bar">
+    <input class="chat-input" id="chat-input" placeholder="Écrire un message..." onkeydown="if(event.key==='Enter')sendMsg()"/>
+    <button class="chat-send" onclick="sendMsg()">➤</button>
+  </div>
+</div>
+
+<!-- TRACKER MODAL -->
+<div class="modal-overlay" id="tracker-modal">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title">📉 Mettre à jour le poids</div>
+    <div class="modal-subtitle">Pesez-vous le matin à jeun</div>
+    <div class="input-group">
+      <label>Poids actuel (kg)</label>
+      <input type="number" id="new-poids" placeholder="68.4" step="0.1"/>
+    </div>
+    <div class="input-group">
+      <label>Énergie du jour</label>
+      <select id="new-energie" style="background:var(--dark);border:1.5px solid var(--border);border-radius:14px;padding:14px 16px;font-size:15px;color:var(--text);font-family:'DM Sans',sans-serif;outline:none;width:100%;">
+        <option>💪 Top forme</option>
+        <option>😊 Bonne journée</option>
+        <option>😐 Moyen</option>
+        <option>😴 Fatigué(e)</option>
+      </select>
+    </div>
+    <button class="btn-primary" onclick="saveWeight()">Enregistrer</button>
+    <button class="btn-secondary" onclick="closeModal('tracker-modal')">Annuler</button>
+  </div>
+</div>
+
+<!-- MESURES MODAL -->
+<div class="modal-overlay" id="mesures-modal">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title">📏 Mes mesures</div>
+    <div class="modal-input-row">
+      <div class="input-group">
+        <label>Taille (cm)</label>
+        <input type="number" id="inp-taille" placeholder="68"/>
+      </div>
+      <div class="input-group">
+        <label>Hanches (cm)</label>
+        <input type="number" id="inp-hanches" placeholder="90"/>
+      </div>
+    </div>
+    <div class="input-group">
+      <label>Bras (cm)</label>
+      <input type="number" id="inp-bras" placeholder="28"/>
+    </div>
+    <button class="btn-primary" onclick="saveMesures()">Enregistrer</button>
+    <button class="btn-secondary" onclick="closeModal('mesures-modal')">Annuler</button>
+  </div>
+</div>
+
+<!-- PURCHASE MODAL -->
+<div class="purchase-modal" id="purchase-modal">
+  <div class="purchase-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title" style="margin-bottom:16px;">💳 Paiement sécurisé</div>
+    <div class="purchase-product-preview">
+      <div class="purchase-emoji" id="pur-emoji">🔥</div>
+      <div>
+        <div class="purchase-product-name" id="pur-name">Guide Perte de Poids</div>
+        <div class="purchase-product-price" id="pur-price" style="color:var(--green);">12,99€</div>
+      </div>
+    </div>
+    <div class="stripe-form">
+      <div class="stripe-field">
+        <label>Email</label>
+        <input type="email" placeholder="votre@email.com" id="pay-email"/>
+      </div>
+      <div class="stripe-field">
+        <label>Numéro de carte</label>
+        <input type="text" placeholder="1234 5678 9012 3456" maxlength="19" id="pay-card" oninput="formatCard(this)"/>
+      </div>
+      <div class="stripe-row">
+        <div class="stripe-field">
+          <label>Expiration</label>
+          <input type="text" placeholder="MM/AA" maxlength="5" id="pay-exp" oninput="formatExp(this)"/>
+        </div>
+        <div class="stripe-field">
+          <label>CVV</label>
+          <input type="text" placeholder="123" maxlength="3"/>
+        </div>
+      </div>
+      <div class="secure-note">🔒 Paiement 100% sécurisé par Stripe</div>
+      <button class="btn-primary" onclick="processPayment()" id="pay-btn">Payer <span id="pay-amount">12,99€</span></button>
+      <button class="btn-secondary" onclick="closeModal('purchase-modal')">Annuler</button>
+    </div>
+  </div>
+</div>
+
+<!-- SUCCESS -->
+<div class="success-overlay" id="success-overlay">
+  <div class="success-check">🎉</div>
+  <div class="success-title">Paiement réussi !</div>
+  <div class="success-sub">Votre guide est maintenant disponible dans "Mes guides"</div>
+  <button class="btn-primary" style="width:260px;margin-top:8px;" onclick="closeSuccess()">Voir mes guides</button>
+</div>
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<script>
+// ── DATA ────────────────────────────────────────────────────────
+const products = [
+  { id:1, name:"Guide Perte de Poids 30 Jours", emoji:"🔥", price:"12,99€", priceNum:12.99,
+    old:"24,99€", badge:"BEST-SELLER", badgeColor:"#F4845F", bg:"linear-gradient(135deg,#1B4332,#2D6A4F)",
+    accent:"#52B788", category:"sport", stars:"4.9", reviews:"318",
+    desc:"Plan repas + 20 exercices + recettes minceur" },
+  { id:2, name:"Bible Nutrition Saine", emoji:"🥗", price:"9,99€", priceNum:9.99,
+    old:"19,99€", badge:"NOUVEAU", badgeColor:"#3B82F6", bg:"linear-gradient(135deg,#1E3A5F,#1e40af)",
+    accent:"#60A5FA", category:"nutrition", stars:"4.8", reviews:"142",
+    desc:"200+ recettes · Plans 3 niveaux" },
+  { id:3, name:"Programme HIIT 8 Semaines", emoji:"⚡", price:"14,99€", priceNum:14.99,
+    old:"29,99€", badge:"POPULAIRE", badgeColor:"#7C3AED", bg:"linear-gradient(135deg,#3B1F5E,#4c1d95)",
+    accent:"#A78BFA", category:"sport", stars:"4.9", reviews:"207",
+    desc:"160+ exercices · 4 protocoles HIIT" },
+  { id:4, name:"Pack Complet Transformation", emoji:"💎", price:"24,99€", priceNum:24.99,
+    old:"57,97€", badge:"ÉCONOMIE -57%", badgeColor:"#DC2626", bg:"linear-gradient(135deg,#78350F,#b45309)",
+    accent:"#FCD34D", category:"pack", stars:"5.0", reviews:"89",
+    desc:"8 modules · 185+ pages · Accès à vie" },
+];
+
+const weightData = [
+  {week:"S1",val:72},{week:"S2",val:71.2},{week:"S3",val:70.1},
+  {week:"S4",val:69.5},{week:"S5",val:68.8},{week:"S6",val:68.4},
+];
+
+let userData = JSON.parse(localStorage.getItem('fg_user') || 'null');
+let purchasedIds = JSON.parse(localStorage.getItem('fg_purchased') || '[1,3]');
+let weightLog = JSON.parse(localStorage.getItem('fg_weight') || JSON.stringify(weightData));
+let isLogin = true;
+
+const chats = {
+  coach: {
+    name: "FitGuides Coach",
+    avatar: "💪",
+    avatarBg: "linear-gradient(135deg,#1B4332,#52B788)",
+    messages: [
+      {from:'them', text:"Bienvenue sur FitGuides Pro ! 🎉 Je suis là pour t'accompagner dans ta transformation.", time:"Lun 09:00"},
+      {from:'them', text:"Comment s'est passée ta première semaine ?", time:"Lun 09:01"},
+      {from:'me', text:"Excellent ! J'ai déjà perdu 1.2kg 🔥", time:"Lun 10:30"},
+      {from:'them', text:"Incroyable ! Tu es en avance sur le programme. Continue comme ça 💪", time:"Lun 10:32"},
+      {from:'them', text:"Super progression cette semaine ! Continue comme ça 🔥", time:"Aujourd'hui 14:02"},
+    ]
+  }
+};
+let currentChat = null;
+
+// ── INIT ─────────────────────────────────────────────────────────
+setTimeout(() => {
+  if(userData) showApp();
+  else showAuth();
+}, 2000);
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function showAuth() { showScreen('auth'); }
+
+function showApp() {
+  showScreen('app');
+  renderHomeProducts();
+  renderShop();
+  renderWeightChart();
+  renderSeances();
+  renderMyGuides();
+  renderChatList();
+  if(userData) {
+    const name = userData.name || 'Sophie';
+    document.getElementById('user-display-name').textContent = name;
+    document.getElementById('user-avatar').textContent = name[0].toUpperCase();
+    document.getElementById('profile-avatar').textContent = name[0].toUpperCase();
+    document.getElementById('profile-name').textContent = name;
+    document.getElementById('profile-email').textContent = userData.email || '';
+  }
+}
+
+// ── AUTH ─────────────────────────────────────────────────────────
+function toggleAuth(mode) {
+  isLogin = mode === 'login';
+  document.querySelectorAll('.auth-toggle button').forEach((b,i) => {
+    b.classList.toggle('active', (i===0) === isLogin);
+  });
+  document.getElementById('name-group').style.display = isLogin ? 'none' : 'flex';
+  document.getElementById('auth-btn').textContent = isLogin ? 'Se connecter' : "S'inscrire";
+}
+
+function doAuth() {
+  const email = document.getElementById('inp-email').value;
+  const pass = document.getElementById('inp-pass').value;
+  const name = document.getElementById('inp-name').value || 'Sophie';
+  if(!email || !pass) { showToast('⚠️ Remplis tous les champs'); return; }
+  const btn = document.getElementById('auth-btn');
+  btn.innerHTML = '<span class="spinner"></span>';
+  setTimeout(() => {
+    userData = { email, name: isLogin ? (userData?.name || 'Sophie') : name };
+    localStorage.setItem('fg_user', JSON.stringify(userData));
+    showApp();
+  }, 1200);
+}
+
+function logout() {
+  if(confirm('Se déconnecter ?')) {
+    userData = null;
+    localStorage.removeItem('fg_user');
+    showAuth();
+  }
+}
+
+// ── TABS ─────────────────────────────────────────────────────────
+function switchTab(tab) {
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('tab-'+tab).classList.add('active');
+  document.getElementById('nav-'+tab)?.classList.add('active');
+  if(tab==='app') showScreen('app');
+}
+
+// ── HOME PRODUCTS ─────────────────────────────────────────────────
+function renderHomeProducts() {
+  const container = document.getElementById('home-products');
+  container.innerHTML = products.slice(0,3).map(p => `
+    <div class="product-card">
+      <div class="product-card-top" style="background:${p.bg}">
+        <div class="product-badge" style="background:${p.badgeColor}">${p.badge}</div>
+        <span class="product-emoji">${p.emoji}</span>
+      </div>
+      <div class="product-card-body">
+        <div class="product-card-name">${p.name}</div>
+        <div class="product-price-row">
+          <span class="product-price" style="color:${p.accent}">${p.price}</span>
+          <span class="product-old-price">${p.old}</span>
+        </div>
+        <button class="product-buy" style="background:${p.accent === '#FCD34D' ? '#B45309' : p.accent.replace('B788','4332').replace('A5FA','2563EB').replace('BFA','7C3AED')}" onclick="openPurchase(${p.id})">
+          ${purchasedIds.includes(p.id) ? '✓ Télécharger' : 'Acheter'}
+        </button>
+      </div>
+    </div>`).join('');
+}
+
+// ── SHOP ─────────────────────────────────────────────────────────
+let currentFilter = 'all';
+function renderShop(filter='all') {
+  const filtered = filter === 'all' ? products : products.filter(p => p.category === filter);
+  document.getElementById('shop-grid').innerHTML = filtered.map(p => `
+    <div class="shop-card">
+      <div class="shop-card-top" style="background:${p.bg}">
+        <div class="shop-card-badge" style="background:${p.badgeColor}">${p.badge}</div>
+        <div class="shop-card-emoji">${p.emoji}</div>
+      </div>
+      <div class="shop-card-body">
+        <div class="shop-card-name">${p.name}</div>
+        <div class="shop-card-stars">★★★★★ ${p.stars}</div>
+        <div class="shop-card-price-row">
+          <div>
+            <div class="shop-card-price" style="color:${p.accent}">${p.price}</div>
+            <div class="shop-card-old">${p.old}</div>
+          </div>
+          <button class="shop-card-btn" style="background:${p.badgeColor}" onclick="openPurchase(${p.id})">
+            ${purchasedIds.includes(p.id) ? '↓' : '+'}
+          </button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+function filterShop(f, btn) {
+  currentFilter = f;
+  document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  renderShop(f);
+}
+
+// ── WEIGHT CHART ─────────────────────────────────────────────────
+function renderWeightChart() {
+  const data = weightLog;
+  const min = Math.min(...data.map(d => d.val)) - 1;
+  const max = Math.max(...data.map(d => d.val)) + 1;
+  const chart = document.getElementById('weight-chart');
+  const labels = document.getElementById('weight-labels');
+  chart.innerHTML = data.map((d,i) => {
+    const h = ((d.val - min)/(max - min)) * 80 + 15;
+    const isLast = i === data.length - 1;
+    return `<div class="weight-bar" style="height:${h}px;background:${isLast ? 'var(--green)' : 'rgba(82,183,136,0.3)'};" title="${d.val}kg"></div>`;
+  }).join('');
+  labels.innerHTML = data.map(d => `<div class="weight-label">${d.week}</div>`).join('');
+  const latest = data[data.length-1].val;
+  const start = data[0].val;
+  document.getElementById('m-actuel').innerHTML = latest+'<span style="font-size:14px;">kg</span>';
+  document.getElementById('m-depart').innerHTML = start+'<span style="font-size:14px;">kg</span>';
+  const diff = (latest-start).toFixed(1);
+  document.getElementById('m-perdu').innerHTML = diff+'<span style="font-size:14px;">kg</span>';
+  document.getElementById('stat-poids').textContent = latest;
+  document.getElementById('stat-perdu').textContent = diff;
+}
+
+// ── SEANCES GRID ─────────────────────────────────────────────────
+function renderSeances() {
+  const days = ['L','M','M','J','V','S','D'];
+  const done = [true,true,false,true,true,false,false,true,true,false,true,false,false,false,true,true,true,false,true,false,false];
+  let html = days.map(d => `<div style="font-size:10px;color:var(--muted);text-align:center;">${d}</div>`).join('');
+  html += done.map(d => `<div style="height:32px;border-radius:8px;background:${d ? 'var(--green)' : 'var(--border)'}"></div>`).join('');
+  document.getElementById('seances-grid').innerHTML = html;
+}
+
+// ── MY GUIDES ────────────────────────────────────────────────────
+function renderMyGuides() {
+  const myP = products.filter(p => purchasedIds.includes(p.id));
+  document.getElementById('my-guides').innerHTML = myP.map(p => `
+    <div style="background:var(--card);border-radius:18px;padding:16px;border:1px solid var(--border);margin-bottom:10px;display:flex;align-items:center;gap:14px;">
+      <div style="font-size:32px;">${p.emoji}</div>
+      <div style="flex:1;">
+        <div style="font-family:'Syne',sans-serif;font-size:14px;font-weight:700;">${p.name}</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:2px;">${p.desc}</div>
+      </div>
+      <button style="background:var(--green);border:none;border-radius:10px;padding:8px 14px;color:#fff;font-size:12px;font-weight:700;cursor:pointer;">↓ PDF</button>
+    </div>`).join('');
+}
+
+// ── CHAT ─────────────────────────────────────────────────────────
+function renderChatList() {
+  document.getElementById('chat-list').innerHTML = Object.entries(chats).map(([id,chat]) => `
+    <div class="chat-item" onclick="openChat('${id}')">
+      <div class="chat-avatar" style="background:${chat.avatarBg}">${chat.avatar}</div>
+      <div class="chat-info">
+        <div class="chat-name">${chat.name}</div>
+        <div class="chat-preview">${chat.messages[chat.messages.length-1].text}</div>
+      </div>
+      <div class="chat-meta">
+        <div class="chat-time">${chat.messages[chat.messages.length-1].time}</div>
+        <div class="chat-unread">1</div>
+      </div>
+    </div>`).join('');
+}
+
+function openChat(id) {
+  currentChat = id;
+  const chat = chats[id];
+  document.getElementById('chat-name').textContent = chat.name;
+  document.getElementById('chat-avatar').textContent = chat.avatar;
+  document.getElementById('chat-avatar').style.background = chat.avatarBg;
+  const msgs = document.getElementById('chat-messages');
+  msgs.innerHTML = chat.messages.map(m => `
+    <div class="msg ${m.from}">
+      <div class="msg-bubble">${m.text}</div>
+      <div class="msg-time">${m.time}</div>
+    </div>`).join('');
+  msgs.scrollTop = msgs.scrollHeight;
+  showScreen('chatView');
+}
+
+function closeChat() {
+  showScreen('app');
+}
+
+function sendMsg() {
+  const inp = document.getElementById('chat-input');
+  const text = inp.value.trim();
+  if(!text) return;
+  const chat = chats[currentChat];
+  const now = new Date();
+  const time = now.getHours()+':'+(now.getMinutes()+'').padStart(2,'0');
+  chat.messages.push({from:'me', text, time});
+  inp.value = '';
+  const msgs = document.getElementById('chat-messages');
+  msgs.innerHTML += `<div class="msg me"><div class="msg-bubble">${text}</div><div class="msg-time">${time}</div></div>`;
+  msgs.scrollTop = msgs.scrollHeight;
+  // Coach auto-reply
+  setTimeout(() => {
+    const replies = [
+      "Super question ! Je te réponds de suite 💪",
+      "Excellent travail, continue comme ça ! 🔥",
+      "Tu es sur la bonne voie, garde cette motivation ! ⚡",
+      "N'hésite pas si tu as d'autres questions 😊",
+    ];
+    const reply = replies[Math.floor(Math.random()*replies.length)];
+    chat.messages.push({from:'them', text:reply, time});
+    msgs.innerHTML += `<div class="msg them"><div class="msg-bubble">${reply}</div><div class="msg-time">${time}</div></div>`;
+    msgs.scrollTop = msgs.scrollHeight;
+  }, 1500);
+}
+
+// ── PURCHASE ─────────────────────────────────────────────────────
+let currentProduct = null;
+function openPurchase(id) {
+  if(purchasedIds.includes(id)) { showToast('📥 Téléchargement lancé !'); return; }
+  currentProduct = products.find(p => p.id === id);
+  document.getElementById('pur-emoji').textContent = currentProduct.emoji;
+  document.getElementById('pur-name').textContent = currentProduct.name;
+  document.getElementById('pur-price').textContent = currentProduct.price;
+  document.getElementById('pay-amount').textContent = currentProduct.price;
+  if(userData) document.getElementById('pay-email').value = userData.email || '';
+  document.getElementById('purchase-modal').classList.add('open');
+}
+
+function processPayment() {
+  const card = document.getElementById('pay-card').value;
+  const exp = document.getElementById('pay-exp').value;
+  if(!card || !exp) { showToast('⚠️ Remplis les informations de paiement'); return; }
+  const btn = document.getElementById('pay-btn');
+  btn.innerHTML = '<span class="spinner"></span> Traitement...';
+  btn.disabled = true;
+  setTimeout(() => {
+    btn.innerHTML = 'Payer ' + currentProduct.price;
+    btn.disabled = false;
+    closeModal('purchase-modal');
+    purchasedIds.push(currentProduct.id);
+    localStorage.setItem('fg_purchased', JSON.stringify(purchasedIds));
+    document.getElementById('success-overlay').classList.add('open');
+    renderMyGuides();
+    renderShop(currentFilter);
+    renderHomeProducts();
+  }, 2000);
+}
+
+function closeSuccess() {
+  document.getElementById('success-overlay').classList.remove('open');
+  switchTab('tracker');
+}
+
+function formatCard(inp) {
+  let v = inp.value.replace(/\D/g,'').slice(0,16);
+  inp.value = v.match(/.{1,4}/g)?.join(' ') || v;
+}
+function formatExp(inp) {
+  let v = inp.value.replace(/\D/g,'').slice(0,4);
+  if(v.length > 2) v = v.slice(0,2)+'/'+v.slice(2);
+  inp.value = v;
+}
+
+// ── TRACKER ──────────────────────────────────────────────────────
+function openTrackerModal() { document.getElementById('tracker-modal').classList.add('open'); }
+function openMesuresModal() { document.getElementById('mesures-modal').classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+function saveWeight() {
+  const val = parseFloat(document.getElementById('new-poids').value);
+  if(!val) { showToast('⚠️ Entre ton poids'); return; }
+  const weeks = ['S1','S2','S3','S4','S5','S6','S7','S8'];
+  const next = weeks[weightLog.length] || 'S'+( weightLog.length+1);
+  weightLog.push({week:next, val});
+  localStorage.setItem('fg_weight', JSON.stringify(weightLog));
+  renderWeightChart();
+  closeModal('tracker-modal');
+  showToast('✅ Poids enregistré !');
+}
+
+function saveMesures() {
+  const t = document.getElementById('inp-taille').value;
+  const h = document.getElementById('inp-hanches').value;
+  const b = document.getElementById('inp-bras').value;
+  if(t) document.getElementById('m-taille').innerHTML = t+'<span style="font-size:14px;">cm</span>';
+  if(h) document.getElementById('m-hanches').innerHTML = h+'<span style="font-size:14px;">cm</span>';
+  if(b) document.getElementById('m-bras').innerHTML = b+'<span style="font-size:14px;">cm</span>';
+  closeModal('mesures-modal');
+  showToast('✅ Mesures enregistrées !');
+}
+
+// ── TOAST ────────────────────────────────────────────────────────
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+function editProfile() { showToast('⚙️ Fonctionnalité bientôt disponible'); }
+
+// Close modals on overlay click
+document.querySelectorAll('.modal-overlay, .purchase-modal').forEach(el => {
+  el.addEventListener('click', e => {
+    if(e.target === el) el.classList.remove('open');
+  });
+});
+</script>
+</body>
+</html>
