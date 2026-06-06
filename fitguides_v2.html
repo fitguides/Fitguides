@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<meta name="theme-color" content="#050A14"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="FitGuides Pro"/>
+<title>FitGuides Pro</title>
+<link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Cabinet+Grotesk:wght@400;500;700;800;900&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --g:#34D399;--gd:#065F46;--gm:#059669;
+  --o:#FB923C;--p:#C084FC;--b:#38BDF8;--y:#FDE047;--r:#F87171;
+  --bg:#050A14;--s1:#0D1526;--s2:#111E33;--s3:#162040;
+  --br:#1E2D4A;--br2:#243558;
+  --t:#F8FAFC;--t2:#94A3B8;--t3:#64748B;
+  --font:'Cabinet Grotesk',sans-serif;
+  --disp:'Clash Display',sans-serif;
+  --serif:'Instrument Serif',serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;overflow:hidden;background:var(--bg);font-family:var(--font);color:var(--t);}
+
+/* SCREENS */
+.screen{position:fixed;inset:0;display:none;flex-direction:column;overflow:hidden;}
+.screen.active{display:flex;}
+
+/* ═══ SPLASH ═══ */
+#splash{
+  background:radial-gradient(ellipse 100% 80% at 50% 0%,rgba(52,211,153,0.15) 0%,transparent 60%),var(--bg);
+  align-items:center;justify-content:center;gap:0;
+}
+.splash-ring{width:120px;height:120px;border-radius:28px;background:linear-gradient(135deg,var(--gd),var(--gm));display:flex;align-items:center;justify-content:center;margin-bottom:28px;box-shadow:0 0 60px rgba(52,211,153,0.3);}
+.splash-ring svg{width:60px;height:60px;}
+.splash-wordmark{font-family:var(--disp);font-size:36px;font-weight:700;letter-spacing:-1px;margin-bottom:8px;}
+.splash-wordmark em{color:var(--g);font-style:normal;}
+.splash-tag{font-size:13px;color:var(--t3);letter-spacing:2px;text-transform:uppercase;margin-bottom:48px;}
+.splash-dots{display:flex;gap:8px;}
+.splash-dot{width:8px;height:8px;border-radius:50%;background:var(--br2);}
+.splash-dot.active{background:var(--g);animation:pulse 1s ease infinite;}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:1;}50%{transform:scale(1.3);opacity:.7;}}
+
+/* ═══ AUTH ═══ */
+#auth{
+  background:radial-gradient(ellipse 120% 60% at 50% -10%,rgba(52,211,153,0.12) 0%,transparent 55%),var(--bg);
+}
+.auth-top{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 32px 20px;}
+.auth-logo{font-family:var(--disp);font-size:44px;font-weight:700;letter-spacing:-2px;text-align:center;line-height:1;}
+.auth-logo em{color:var(--g);font-style:normal;}
+.auth-headline{font-family:var(--serif);font-style:italic;font-size:18px;color:var(--t2);text-align:center;margin-top:12px;line-height:1.5;}
+.auth-pills{display:flex;gap:10px;margin-top:24px;flex-wrap:wrap;justify-content:center;}
+.auth-pill{display:flex;align-items:center;gap:6px;background:rgba(52,211,153,0.08);border:1px solid rgba(52,211,153,0.2);border-radius:99px;padding:6px 14px;font-size:12px;font-weight:700;color:var(--g);}
+.auth-bottom{background:var(--s1);border-radius:32px 32px 0 0;padding:28px 24px 48px;border-top:1px solid var(--br);}
+.auth-tabs{display:grid;grid-template-columns:1fr 1fr;background:var(--bg);border-radius:16px;padding:4px;margin-bottom:24px;}
+.auth-tab{padding:11px;border:none;background:none;font-family:var(--font);font-size:14px;font-weight:800;color:var(--t3);border-radius:13px;cursor:pointer;transition:.2s;}
+.auth-tab.active{background:var(--g);color:#000;}
+.field{margin-bottom:14px;}
+.field label{display:block;font-size:11px;font-weight:800;color:var(--t3);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:7px;}
+.field input{width:100%;background:var(--bg);border:1.5px solid var(--br);border-radius:16px;padding:15px 18px;font-size:15px;font-family:var(--font);font-weight:500;color:var(--t);outline:none;transition:.2s;}
+.field input:focus{border-color:var(--g);box-shadow:0 0 0 4px rgba(52,211,153,0.08);}
+.field input::placeholder{color:var(--t3);}
+.btn{width:100%;padding:17px;border:none;border-radius:16px;font-family:var(--font);font-size:16px;font-weight:800;cursor:pointer;transition:.15s;letter-spacing:.2px;}
+.btn:active{transform:scale(.98);}
+.btn-green{background:linear-gradient(135deg,var(--gm),var(--g));color:#000;}
+.btn-ghost{background:var(--bg);border:1.5px solid var(--br);color:var(--t2);margin-top:10px;}
+.auth-divider{text-align:center;color:var(--t3);font-size:13px;margin:14px 0;position:relative;}
+.auth-divider::before,.auth-divider::after{content:'';position:absolute;top:50%;width:40%;height:1px;background:var(--br);}
+.auth-divider::before{left:0;}.auth-divider::after{right:0;}
+
+/* ═══ APP SHELL ═══ */
+#app{background:var(--bg);}
+
+/* TOP BAR */
+.topbar{padding:56px 22px 18px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+.tb-left{}
+.tb-greet{font-size:12px;font-weight:700;color:var(--t3);letter-spacing:1px;text-transform:uppercase;}
+.tb-name{font-family:var(--disp);font-size:26px;font-weight:700;letter-spacing:-1px;margin-top:2px;}
+.tb-right{display:flex;align-items:center;gap:10px;}
+.tb-notif{width:44px;height:44px;background:var(--s1);border:1px solid var(--br);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;position:relative;}
+.tb-notif-dot{position:absolute;top:8px;right:8px;width:8px;height:8px;background:var(--o);border-radius:50%;border:2px solid var(--bg);}
+.tb-avatar{width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,var(--gd),var(--g));display:flex;align-items:center;justify-content:center;font-weight:900;font-size:18px;color:#000;cursor:pointer;}
+
+/* SCROLL AREA */
+.scroll{flex:1;overflow-y:auto;padding:0 22px 110px;}
+.scroll::-webkit-scrollbar{display:none;}
+
+/* SECTION */
+.sec{display:flex;align-items:center;justify-content:space-between;margin:26px 0 14px;}
+.sec-t{font-family:var(--disp);font-size:18px;font-weight:700;letter-spacing:-.5px;}
+.sec-a{font-size:13px;font-weight:700;color:var(--g);cursor:pointer;}
+
+/* ═══ HOME ═══ */
+/* Program card */
+.prog-card{background:linear-gradient(135deg,#062318 0%,#0a3d28 60%,#0d5235 100%);border-radius:26px;padding:24px;position:relative;overflow:hidden;margin-bottom:6px;}
+.prog-card::before{content:'';position:absolute;top:-60px;right:-60px;width:200px;height:200px;background:radial-gradient(circle,rgba(52,211,153,.2),transparent 70%);}
+.prog-card::after{content:'';position:absolute;bottom:-40px;left:-40px;width:150px;height:150px;background:radial-gradient(circle,rgba(52,211,153,.1),transparent 70%);}
+.prog-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(52,211,153,.15);border:1px solid rgba(52,211,153,.3);border-radius:99px;padding:5px 12px;font-size:11px;font-weight:800;color:var(--g);letter-spacing:.5px;margin-bottom:14px;}
+.prog-title{font-family:var(--disp);font-size:24px;font-weight:700;letter-spacing:-.5px;line-height:1.1;margin-bottom:4px;}
+.prog-title em{color:var(--g);font-style:normal;}
+.prog-sub{font-size:13px;color:rgba(255,255,255,.5);margin-bottom:18px;}
+.prog-bar-wrap{margin-bottom:14px;}
+.prog-bar-info{display:flex;justify-content:space-between;font-size:12px;font-weight:700;margin-bottom:7px;}
+.prog-bar-info span:last-child{color:var(--g);}
+.prog-bar{height:5px;background:rgba(255,255,255,.1);border-radius:99px;overflow:hidden;}
+.prog-bar-fill{height:100%;background:linear-gradient(90deg,var(--gm),var(--g));border-radius:99px;}
+.prog-btn{display:inline-flex;align-items:center;gap:8px;background:var(--g);border:none;border-radius:12px;padding:11px 20px;font-family:var(--font);font-size:13px;font-weight:800;color:#000;cursor:pointer;}
+
+/* Stats grid */
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:6px;}
+.stat-c{background:var(--s1);border-radius:22px;padding:20px;border:1px solid var(--br);position:relative;overflow:hidden;}
+.stat-c::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
+.stat-c.c-g::before{background:linear-gradient(90deg,var(--g),transparent);}
+.stat-c.c-o::before{background:linear-gradient(90deg,var(--o),transparent);}
+.stat-c.c-p::before{background:linear-gradient(90deg,var(--p),transparent);}
+.stat-c.c-b::before{background:linear-gradient(90deg,var(--b),transparent);}
+.stat-ico{font-size:24px;margin-bottom:10px;}
+.stat-val{font-family:var(--disp);font-size:34px;font-weight:700;letter-spacing:-1px;line-height:1;}
+.stat-lbl{font-size:12px;font-weight:700;color:var(--t3);margin-top:4px;}
+.c-g .stat-val{color:var(--g);}
+.c-o .stat-val{color:var(--o);}
+.c-p .stat-val{color:var(--p);}
+.c-b .stat-val{color:var(--b);}
+
+/* Horizontal products */
+.h-scroll{display:flex;gap:14px;overflow-x:auto;padding-bottom:6px;margin:0 -22px;padding-left:22px;padding-right:22px;}
+.h-scroll::-webkit-scrollbar{display:none;}
+.prod-mini{flex-shrink:0;width:185px;background:var(--s1);border-radius:22px;overflow:hidden;border:1px solid var(--br);}
+.prod-mini-top{padding:18px 16px 14px;position:relative;display:flex;flex-direction:column;align-items:center;min-height:100px;}
+.prod-mini-badge{position:absolute;top:10px;left:10px;font-size:8px;font-weight:800;padding:3px 8px;border-radius:99px;color:#fff;letter-spacing:.5px;text-transform:uppercase;}
+.prod-mini-ico{font-size:44px;margin-top:8px;}
+.prod-mini-body{padding:12px 14px 14px;}
+.prod-mini-name{font-family:var(--disp);font-size:13px;font-weight:700;letter-spacing:-.3px;line-height:1.3;margin-bottom:8px;}
+.prod-mini-price-row{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:10px;}
+.prod-mini-price{font-size:19px;font-weight:900;}
+.prod-mini-old{font-size:11px;color:var(--t3);text-decoration:line-through;}
+.prod-mini-btn{width:100%;padding:9px;border:none;border-radius:11px;font-family:var(--font);font-size:12px;font-weight:800;cursor:pointer;color:#000;transition:.15s;}
+.prod-mini-btn:active{transform:scale(.97);}
+
+/* Coach message */
+.coach-card{background:var(--s1);border-radius:22px;padding:18px;border:1px solid var(--br);display:flex;align-items:center;gap:14px;cursor:pointer;transition:.2s;}
+.coach-card:active{background:var(--s2);}
+.coach-av{width:50px;height:50px;border-radius:16px;background:linear-gradient(135deg,var(--gd),var(--g));display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+.coach-info{flex:1;min-width:0;}
+.coach-name{font-size:15px;font-weight:800;}
+.coach-prev{font-size:13px;color:var(--t2);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.coach-meta{text-align:right;flex-shrink:0;}
+.coach-time{font-size:11px;color:var(--t3);}
+.coach-badge{width:22px;height:22px;background:var(--g);border-radius:99px;font-size:11px;font-weight:900;color:#000;display:flex;align-items:center;justify-content:center;margin-top:4px;margin-left:auto;}
+
+/* ═══ SHOP ═══ */
+.shop-hero{padding:56px 22px 0;flex-shrink:0;}
+.shop-wordmark{font-family:var(--disp);font-size:52px;font-weight:700;letter-spacing:-2px;line-height:.9;margin-bottom:6px;}
+.shop-wordmark em{color:var(--g);font-style:normal;}
+.shop-desc{font-size:13px;color:var(--t3);margin-bottom:18px;}
+.promo-strip{background:linear-gradient(135deg,#7C2D12,#EA580C);border-radius:18px;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;}
+.promo-strip-left .label{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;opacity:.8;}
+.promo-strip-left .value{font-size:15px;font-weight:900;margin-top:2px;}
+.promo-chip{background:rgba(0,0,0,.3);border-radius:10px;padding:8px 16px;font-size:14px;font-weight:900;letter-spacing:2px;}
+.filters{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;margin-bottom:18px;}
+.filters::-webkit-scrollbar{display:none;}
+.fil{flex-shrink:0;padding:8px 18px;border-radius:99px;border:1.5px solid var(--br);font-family:var(--font);font-size:13px;font-weight:700;background:none;color:var(--t3);cursor:pointer;transition:.2s;}
+.fil.on{background:var(--g);border-color:var(--g);color:#000;}
+.shop-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.shop-c{background:var(--s1);border-radius:22px;overflow:hidden;border:1px solid var(--br);}
+.shop-c-top{padding:18px 14px 12px;display:flex;flex-direction:column;align-items:center;position:relative;}
+.shop-c-badge{position:absolute;top:10px;left:10px;font-size:8px;font-weight:800;padding:3px 8px;border-radius:99px;color:#fff;letter-spacing:.5px;text-transform:uppercase;}
+.shop-c-ico{font-size:46px;margin-top:8px;}
+.shop-c-body{padding:12px 14px 14px;}
+.shop-c-name{font-family:var(--disp);font-size:13px;font-weight:700;letter-spacing:-.3px;line-height:1.3;margin-bottom:4px;}
+.shop-c-stars{font-size:11px;color:var(--y);font-weight:700;margin-bottom:8px;}
+.shop-c-row{display:flex;align-items:center;justify-content:space-between;}
+.shop-c-price{font-size:18px;font-weight:900;}
+.shop-c-old{font-size:11px;color:var(--t3);text-decoration:line-through;margin-top:1px;}
+.shop-c-btn{width:38px;height:38px;border:none;border-radius:12px;font-size:16px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+
+/* ═══ TRACKER ═══ */
+.track-card{background:var(--s1);border-radius:24px;padding:20px;border:1px solid var(--br);margin-bottom:14px;}
+.track-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.track-title{font-family:var(--disp);font-size:17px;font-weight:700;letter-spacing:-.3px;}
+.track-action{font-size:12px;font-weight:800;color:var(--g);background:rgba(52,211,153,.1);border:none;border-radius:8px;padding:5px 12px;cursor:pointer;font-family:var(--font);}
+
+/* Chart */
+.chart{height:90px;display:flex;align-items:flex-end;gap:5px;padding-bottom:0;border-bottom:1px solid var(--br);margin-bottom:10px;}
+.bar{flex:1;border-radius:6px 6px 0 0;min-height:6px;transition:.4s;}
+.chart-lbls{display:flex;gap:5px;}
+.chart-lbl{flex:1;font-size:9px;color:var(--t3);text-align:center;font-weight:700;}
+
+/* Metrics */
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px;}
+.metric{text-align:center;background:var(--bg);border-radius:14px;padding:12px 8px;}
+.metric-v{font-family:var(--disp);font-size:22px;font-weight:700;color:var(--g);line-height:1;}
+.metric-v.neg{color:var(--o);}
+.metric-l{font-size:10px;color:var(--t3);font-weight:700;margin-top:3px;text-transform:uppercase;letter-spacing:.5px;}
+
+/* Calendar */
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;}
+.cal-day-lbl{font-size:9px;color:var(--t3);text-align:center;font-weight:800;text-transform:uppercase;}
+.cal-day{height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;}
+.cal-day.done{background:var(--g);}
+.cal-day.miss{background:var(--br);}
+.cal-day.rest{background:var(--s2);opacity:.5;}
+
+/* My guides */
+.guide-row{background:var(--s1);border-radius:18px;padding:15px;border:1px solid var(--br);display:flex;align-items:center;gap:13px;margin-bottom:10px;}
+.guide-ico{font-size:30px;flex-shrink:0;}
+.guide-info{flex:1;}
+.guide-name{font-size:14px;font-weight:800;line-height:1.3;}
+.guide-desc{font-size:12px;color:var(--t3);margin-top:2px;}
+.guide-dl{background:var(--g);border:none;border-radius:10px;padding:8px 14px;font-size:12px;font-weight:800;font-family:var(--font);color:#000;cursor:pointer;}
+
+/* ═══ MESSAGES ═══ */
+.msg-header{padding:56px 22px 18px;flex-shrink:0;}
+.msg-wordmark{font-family:var(--disp);font-size:42px;font-weight:700;letter-spacing:-2px;}
+.chat-list{flex:1;overflow-y:auto;padding:0 22px 100px;}
+.chat-list::-webkit-scrollbar{display:none;}
+.chat-row{display:flex;gap:13px;align-items:center;padding:15px 0;border-bottom:1px solid rgba(255,255,255,.04);cursor:pointer;}
+.chat-av{width:50px;height:50px;border-radius:17px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;flex-shrink:0;}
+.chat-inf{flex:1;min-width:0;}
+.chat-nm{font-size:15px;font-weight:800;}
+.chat-pv{font-size:13px;color:var(--t2);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.chat-mt{text-align:right;flex-shrink:0;}
+.chat-tm{font-size:11px;color:var(--t3);}
+.chat-un{width:22px;height:22px;background:var(--g);border-radius:99px;font-size:11px;font-weight:900;color:#000;display:flex;align-items:center;justify-content:center;margin:4px 0 0 auto;}
+
+/* Chat view */
+#chatScreen{background:var(--bg);}
+.cv-bar{padding:56px 20px 14px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--br);flex-shrink:0;}
+.cv-back{width:40px;height:40px;border-radius:12px;background:var(--s1);border:1px solid var(--br);display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer;}
+.cv-av{width:42px;height:42px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+.cv-info{flex:1;}
+.cv-name{font-size:16px;font-weight:800;}
+.cv-status{font-size:12px;color:var(--g);font-weight:700;margin-top:1px;}
+.cv-msgs{flex:1;overflow-y:auto;padding:18px 20px;display:flex;flex-direction:column;gap:10px;}
+.cv-msgs::-webkit-scrollbar{display:none;}
+.bubble-wrap{display:flex;flex-direction:column;gap:3px;}
+.bubble-wrap.me{align-items:flex-end;}
+.bubble-wrap.them{align-items:flex-start;}
+.bubble{padding:12px 16px;border-radius:20px;font-size:14px;line-height:1.55;max-width:78%;}
+.bubble.me{background:var(--gm);color:#fff;border-radius:20px 20px 5px 20px;}
+.bubble.them{background:var(--s2);border-radius:20px 20px 20px 5px;}
+.bubble-time{font-size:10px;color:var(--t3);font-weight:600;}
+.cv-input{padding:10px 16px 36px;display:flex;gap:10px;border-top:1px solid var(--br);flex-shrink:0;}
+.cv-inp{flex:1;background:var(--s1);border:1.5px solid var(--br);border-radius:22px;padding:12px 18px;font-size:14px;font-family:var(--font);color:var(--t);outline:none;}
+.cv-inp:focus{border-color:var(--g);}
+.cv-send{width:46px;height:46px;background:var(--g);border:none;border-radius:14px;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+
+/* ═══ PROFILE ═══ */
+.prof-card{background:linear-gradient(135deg,var(--s1),var(--s2));border-radius:26px;padding:24px;border:1px solid var(--br);margin-bottom:20px;display:flex;align-items:center;gap:16px;}
+.prof-av{width:68px;height:68px;border-radius:22px;background:linear-gradient(135deg,var(--gd),var(--g));display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:900;color:#000;flex-shrink:0;}
+.prof-inf{flex:1;}
+.prof-name{font-family:var(--disp);font-size:22px;font-weight:700;letter-spacing:-.5px;}
+.prof-email{font-size:13px;color:var(--t3);margin-top:2px;}
+.prof-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.25);border-radius:99px;padding:4px 11px;font-size:11px;font-weight:800;color:var(--g);margin-top:8px;}
+.menu-section{background:var(--s1);border-radius:22px;border:1px solid var(--br);overflow:hidden;margin-bottom:14px;}
+.menu-row{display:flex;align-items:center;gap:14px;padding:17px 18px;border-bottom:1px solid var(--br);cursor:pointer;transition:.15s;}
+.menu-row:last-child{border-bottom:none;}
+.menu-row:active{background:var(--s2);}
+.menu-ico{width:40px;height:40px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.menu-txt{flex:1;}
+.menu-lbl{font-size:15px;font-weight:700;}
+.menu-sub{font-size:12px;color:var(--t3);margin-top:2px;}
+.menu-arr{color:var(--t3);font-size:20px;}
+
+/* ═══ NAV ═══ */
+.nav{position:fixed;bottom:0;left:0;right:0;background:rgba(5,10,20,.92);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-top:1px solid var(--br);display:flex;padding:10px 0 26px;z-index:100;}
+.ni{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;padding:4px 0;}
+.ni-ico{font-size:22px;transition:.2s;}
+.ni-lbl{font-size:10px;font-weight:800;color:var(--t3);letter-spacing:.3px;transition:.2s;}
+.ni.on .ni-lbl{color:var(--g);}
+.ni.on .ni-ico{transform:scale(1.15);}
+
+/* ═══ PAYMENT MODAL ═══ */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.8);backdrop-filter:blur(16px);z-index:500;display:none;align-items:flex-end;}
+.overlay.open{display:flex;}
+.sheet{width:100%;background:var(--s1);border-radius:30px 30px 0 0;padding:28px 24px 52px;border-top:1px solid var(--br);}
+.sheet-handle{width:40px;height:4px;background:var(--br2);border-radius:99px;margin:0 auto 24px;}
+.sheet-title{font-family:var(--disp);font-size:24px;font-weight:700;letter-spacing:-.5px;margin-bottom:20px;}
+.pay-preview{background:var(--bg);border-radius:20px;padding:18px;display:flex;align-items:center;gap:14px;margin-bottom:20px;border:1px solid var(--br);}
+.pay-ico{font-size:38px;}
+.pay-pname{font-size:16px;font-weight:800;line-height:1.3;}
+.pay-pprice{font-size:24px;font-weight:900;color:var(--g);margin-top:4px;}
+.pay-fields{display:flex;flex-direction:column;gap:12px;}
+.pay-f{background:var(--bg);border:1.5px solid var(--br);border-radius:16px;padding:14px 16px;}
+.pay-f label{display:block;font-size:10px;font-weight:800;color:var(--t3);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;}
+.pay-f input{background:none;border:none;outline:none;font-family:var(--font);font-size:15px;font-weight:600;color:var(--t);width:100%;}
+.pay-f input::placeholder{color:var(--t3);}
+.pay-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.pay-secure{display:flex;align-items:center;justify-content:center;gap:6px;font-size:12px;color:var(--t3);font-weight:600;margin:4px 0;}
+.pay-brands{display:flex;gap:8px;align-items:center;justify-content:center;margin-bottom:4px;}
+.pay-brand{background:var(--bg);border:1px solid var(--br);border-radius:8px;padding:4px 10px;font-size:11px;font-weight:800;color:var(--t2);}
+
+/* Tracker input modal */
+.t-modal{position:fixed;inset:0;background:rgba(0,0,0,.8);backdrop-filter:blur(16px);z-index:500;display:none;align-items:flex-end;}
+.t-modal.open{display:flex;}
+
+/* Success */
+.success-screen{position:fixed;inset:0;background:var(--bg);z-index:1000;display:none;flex-direction:column;align-items:center;justify-content:center;gap:16px;}
+.success-screen.open{display:flex;}
+.success-ring{width:100px;height:100px;border-radius:28px;background:linear-gradient(135deg,var(--gd),var(--g));display:flex;align-items:center;justify-content:center;font-size:48px;box-shadow:0 0 60px rgba(52,211,153,.4);}
+.success-t{font-family:var(--disp);font-size:32px;font-weight:700;letter-spacing:-1px;}
+.success-s{font-size:15px;color:var(--t2);text-align:center;max-width:260px;line-height:1.6;}
+
+/* Toast */
+#toast{position:fixed;bottom:95px;left:50%;transform:translateX(-50%) translateY(10px);background:var(--s2);border:1px solid var(--br);border-radius:14px;padding:11px 20px;font-size:14px;font-weight:700;z-index:2000;opacity:0;transition:.25s;white-space:nowrap;pointer-events:none;}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* Animations */
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+.fu{animation:fadeUp .35s ease both;}
+.fu1{animation-delay:.05s;}
+.fu2{animation-delay:.1s;}
+.fu3{animation-delay:.15s;}
+.fu4{animation-delay:.2s;}
+
+/* Tab panes */
+.tp{display:none;flex-direction:column;height:100%;}
+.tp.on{display:flex;}
+</style>
+</head>
+<body>
+
+<!-- ══ SPLASH ══ -->
+<div class="screen active" id="splash">
+  <div class="splash-ring">
+    <svg viewBox="0 0 60 60" fill="none">
+      <path d="M30 8C30 8 14 20 14 34C14 42.8 21.2 50 30 50C38.8 50 46 42.8 46 34C46 20 30 8 30 8Z" fill="white" opacity=".9"/>
+      <path d="M22 34C22 34 26 30 30 30C34 30 38 34 38 34" stroke="#065F46" stroke-width="3" stroke-linecap="round"/>
+    </svg>
+  </div>
+  <div class="splash-wordmark">FIT<em>GUIDES</em></div>
+  <div class="splash-tag">Transformation · Performance</div>
+  <div class="splash-dots">
+    <div class="splash-dot active"></div>
+    <div class="splash-dot"></div>
+    <div class="splash-dot"></div>
+  </div>
+</div>
+
+<!-- ══ AUTH ══ -->
+<div class="screen" id="auth">
+  <div class="auth-top">
+    <div class="auth-logo">FIT<em>GUIDES</em><br/>PRO</div>
+    <div class="auth-headline">La plateforme qui transforme<br/>votre corps & vos habitudes</div>
+    <div class="auth-pills">
+      <div class="auth-pill">⚡ 4 847 clients</div>
+      <div class="auth-pill">★ 4.9/5</div>
+      <div class="auth-pill">🔥 −8kg moy.</div>
+    </div>
+  </div>
+  <div class="auth-bottom">
+    <div class="auth-tabs">
+      <button class="auth-tab active" onclick="setAuthTab('login',this)">Connexion</button>
+      <button class="auth-tab" onclick="setAuthTab('reg',this)">Inscription</button>
+    </div>
+    <div id="reg-fields" style="display:none;">
+      <div class="field"><label>Prénom</label><input id="a-name" type="text" placeholder="Sophie"/></div>
+    </div>
+    <div class="field"><label>Email</label><input id="a-email" type="email" placeholder="sophie@email.com"/></div>
+    <div class="field" style="margin-bottom:20px;"><label>Mot de passe</label><input id="a-pass" type="password" placeholder="••••••••"/></div>
+    <button class="btn btn-green" id="a-btn" onclick="doAuth()">Se connecter →</button>
+    <div class="auth-divider">ou continuer avec</div>
+    <button class="btn btn-ghost" onclick="quickDemo()">👀 Voir la démo</button>
+  </div>
+</div>
+
+<!-- ══ APP ══ -->
+<div class="screen" id="app">
+
+  <!-- HOME -->
+  <div class="tp on" id="t-home">
+    <div class="topbar">
+      <div class="tb-left">
+        <div class="tb-greet">Bonjour 👋</div>
+        <div class="tb-name" id="tb-name">Sophie</div>
+      </div>
+      <div class="tb-right">
+        <div class="tb-notif" onclick="showToast('🔔 Aucune nouvelle notification')">
+          🔔<div class="tb-notif-dot"></div>
+        </div>
+        <div class="tb-avatar" id="tb-av" onclick="goTab('profile')">S</div>
+      </div>
+    </div>
+    <div class="scroll">
+      <div class="prog-card fu">
+        <div class="prog-tag">⚡ Programme actif</div>
+        <div class="prog-title">HIIT <em>8 Semaines</em></div>
+        <div class="prog-sub">Phase 2 · Activation · Semaine 3 sur 8</div>
+        <div class="prog-bar-wrap">
+          <div class="prog-bar-info"><span>Progression</span><span>37%</span></div>
+          <div class="prog-bar"><div class="prog-bar-fill" style="width:37%"></div></div>
+        </div>
+        <button class="prog-btn" onclick="goTab('tracker')">📊 Voir mon suivi</button>
+      </div>
+      <div class="sec fu fu1"><div class="sec-t">Cette semaine</div><div class="sec-a" onclick="goTab('tracker')">Tout voir</div></div>
+      <div class="stats-grid fu fu2">
+        <div class="stat-c c-g"><div class="stat-ico">⚡</div><div class="stat-val" id="h-seances">4</div><div class="stat-lbl">Séances</div></div>
+        <div class="stat-c c-o"><div class="stat-ico">🔥</div><div class="stat-val" id="h-kcal">1 240</div><div class="stat-lbl">Kcal brûlées</div></div>
+        <div class="stat-c c-p"><div class="stat-ico">⚖️</div><div class="stat-val" id="h-poids">68.4</div><div class="stat-lbl">Poids kg</div></div>
+        <div class="stat-c c-b"><div class="stat-ico">📉</div><div class="stat-val" id="h-diff">−3.6</div><div class="stat-lbl">kg perdus</div></div>
+      </div>
+      <div class="sec fu fu3"><div class="sec-t">Boutique</div><div class="sec-a" onclick="goTab('shop')">Voir tout</div></div>
+      <div class="h-scroll fu fu3" id="home-prods"></div>
+      <div class="sec fu fu4"><div class="sec-t">Coach</div><div class="sec-a" onclick="goTab('messages')">Messages</div></div>
+      <div class="coach-card fu fu4" onclick="openChat('coach')">
+        <div class="coach-av">💪</div>
+        <div class="coach-info">
+          <div class="coach-name">FitGuides Coach</div>
+          <div class="coach-prev">Super progression cette semaine ! Continue 🔥</div>
+        </div>
+        <div class="coach-meta">
+          <div class="coach-time">14:02</div>
+          <div class="coach-badge">1</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SHOP -->
+  <div class="tp" id="t-shop">
+    <div class="shop-hero">
+      <div class="shop-wordmark">NOTRE<br/><em>BOUTIQUE</em></div>
+      <div class="shop-desc">Guides PDF · Téléchargement immédiat · Résultats garantis</div>
+      <div class="promo-strip">
+        <div class="promo-strip-left">
+          <div class="label">🔥 Code promo actif</div>
+          <div class="value">−20% sur tout</div>
+        </div>
+        <div class="promo-chip">TIKTOK20</div>
+      </div>
+      <div class="filters">
+        <button class="fil on" onclick="doFilter('all',this)">Tous</button>
+        <button class="fil" onclick="doFilter('nutrition',this)">Nutrition</button>
+        <button class="fil" onclick="doFilter('sport',this)">Sport</button>
+        <button class="fil" onclick="doFilter('pack',this)">Packs</button>
+      </div>
+    </div>
+    <div class="scroll" style="padding-top:0;">
+      <div class="shop-grid" id="shop-grid"></div>
+    </div>
+  </div>
+
+  <!-- TRACKER -->
+  <div class="tp" id="t-tracker">
+    <div class="topbar">
+      <div class="tb-left">
+        <div class="tb-greet">Ma transformation</div>
+        <div class="tb-name">Suivi complet</div>
+      </div>
+      <button style="background:var(--g);border:none;border-radius:12px;padding:9px 16px;font-family:var(--font);font-size:13px;font-weight:800;color:#000;cursor:pointer;" onclick="openWModal()">+ Ajouter</button>
+    </div>
+    <div class="scroll">
+      <div class="track-card">
+        <div class="track-head"><div class="track-title">📉 Évolution du poids</div><button class="track-action" onclick="openWModal()">Mettre à jour</button></div>
+        <div class="chart" id="wt-chart"></div>
+        <div class="chart-lbls" id="wt-lbls"></div>
+        <div class="metrics">
+          <div class="metric"><div class="metric-v" id="m-start">72</div><div class="metric-l">Départ kg</div></div>
+          <div class="metric"><div class="metric-v" id="m-now">68.4</div><div class="metric-l">Actuel kg</div></div>
+          <div class="metric"><div class="metric-v neg" id="m-lost">−3.6</div><div class="metric-l">Perdu kg</div></div>
+        </div>
+      </div>
+      <div class="track-card">
+        <div class="track-head"><div class="track-title">📏 Mesures corporelles</div><button class="track-action" onclick="openMModal()">Modifier</button></div>
+        <div class="metrics">
+          <div class="metric"><div class="metric-v" id="m-waist">68</div><div class="metric-l">Taille cm</div></div>
+          <div class="metric"><div class="metric-v" id="m-hips">90</div><div class="metric-l">Hanches cm</div></div>
+          <div class="metric"><div class="metric-v" id="m-arms">28</div><div class="metric-l">Bras cm</div></div>
+        </div>
+      </div>
+      <div class="track-card">
+        <div class="track-head"><div class="track-title">⚡ Séances ce mois</div><span style="font-size:12px;color:var(--t3);font-weight:700;">Juin 2025</span></div>
+        <div class="cal" id="cal-grid"></div>
+        <div style="display:flex;gap:16px;margin-top:12px;font-size:11px;color:var(--t3);font-weight:700;">
+          <span style="display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;background:var(--g);border-radius:3px;display:inline-block;"></span>Fait</span>
+          <span style="display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;background:var(--br);border-radius:3px;display:inline-block;"></span>Prévu</span>
+          <span style="display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;background:var(--s2);border-radius:3px;display:inline-block;"></span>Repos</span>
+        </div>
+      </div>
+      <div class="sec"><div class="sec-t">Mes guides</div></div>
+      <div id="my-guides"></div>
+    </div>
+  </div>
+
+  <!-- MESSAGES -->
+  <div class="tp" id="t-messages">
+    <div class="msg-header">
+      <div class="msg-wordmark">MESSAGES</div>
+    </div>
+    <div class="chat-list" id="chat-list-el"></div>
+  </div>
+
+  <!-- PROFILE -->
+  <div class="tp" id="t-profile">
+    <div class="topbar">
+      <div class="tb-left"><div class="tb-greet">Mon espace</div><div class="tb-name">Profil</div></div>
+    </div>
+    <div class="scroll">
+      <div class="prof-card">
+        <div class="prof-av" id="p-av">S</div>
+        <div class="prof-inf">
+          <div class="prof-name" id="p-name">Sophie M.</div>
+          <div class="prof-email" id="p-email">sophie@email.com</div>
+          <div class="prof-badge">⭐ Membre Premium</div>
+        </div>
+      </div>
+      <div class="menu-section">
+        <div class="menu-row" onclick="goTab('tracker')">
+          <div class="menu-ico" style="background:rgba(52,211,153,.12);">📊</div>
+          <div class="menu-txt"><div class="menu-lbl">Ma progression</div><div class="menu-sub">Poids · mesures · séances</div></div>
+          <div class="menu-arr">›</div>
+        </div>
+        <div class="menu-row" onclick="goTab('shop')">
+          <div class="menu-ico" style="background:rgba(251,146,60,.12);">📖</div>
+          <div class="menu-txt"><div class="menu-lbl">Mes guides</div><div class="menu-sub" id="p-guides-count">2 guides achetés</div></div>
+          <div class="menu-arr">›</div>
+        </div>
+        <div class="menu-row" onclick="goTab('messages')">
+          <div class="menu-ico" style="background:rgba(56,189,248,.12);">💬</div>
+          <div class="menu-txt"><div class="menu-lbl">Messages</div><div class="menu-sub">1 nouveau message</div></div>
+          <div class="menu-arr">›</div>
+        </div>
+        <div class="menu-row" onclick="copyPromo()">
+          <div class="menu-ico" style="background:rgba(253,224,71,.12);">🎁</div>
+          <div class="menu-txt"><div class="menu-lbl">Code promo</div><div class="menu-sub">TIKTOK20 · −20% sur tout</div></div>
+          <div class="menu-arr">›</div>
+        </div>
+      </div>
+      <div class="menu-section">
+        <div class="menu-row" onclick="showToast('⚙️ Bientôt disponible')">
+          <div class="menu-ico" style="background:rgba(192,132,252,.12);">⚙️</div>
+          <div class="menu-txt"><div class="menu-lbl">Paramètres</div><div class="menu-sub">Notifications · objectifs</div></div>
+          <div class="menu-arr">›</div>
+        </div>
+        <div class="menu-row" onclick="doLogout()">
+          <div class="menu-ico" style="background:rgba(248,113,113,.12);">🚪</div>
+          <div class="menu-txt"><div class="menu-lbl" style="color:var(--r);">Déconnexion</div></div>
+          <div class="menu-arr">›</div>
+        </div>
+      </div>
+      <div style="text-align:center;padding:24px;font-size:12px;color:var(--t3);font-weight:700;">
+        FitGuides Pro · v2.0 · fitguides-pr18.vercel.app
+      </div>
+    </div>
+  </div>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="ni on" id="n-home" onclick="goTab('home')"><div class="ni-ico">🏠</div><div class="ni-lbl">Accueil</div></div>
+    <div class="ni" id="n-shop" onclick="goTab('shop')"><div class="ni-ico">🛍️</div><div class="ni-lbl">Boutique</div></div>
+    <div class="ni" id="n-tracker" onclick="goTab('tracker')"><div class="ni-ico">📊</div><div class="ni-lbl">Suivi</div></div>
+    <div class="ni" id="n-messages" onclick="goTab('messages')"><div class="ni-ico">💬</div><div class="ni-lbl">Messages</div></div>
+    <div class="ni" id="n-profile" onclick="goTab('profile')"><div class="ni-ico">👤</div><div class="ni-lbl">Profil</div></div>
+  </nav>
+</div>
+
+<!-- ══ CHAT SCREEN ══ -->
+<div class="screen" id="chatScreen">
+  <div class="cv-bar">
+    <div class="cv-back" onclick="closeChat()">←</div>
+    <div class="cv-av" id="cv-av">💪</div>
+    <div class="cv-info">
+      <div class="cv-name" id="cv-name">Coach</div>
+      <div class="cv-status">● En ligne maintenant</div>
+    </div>
+  </div>
+  <div class="cv-msgs" id="cv-msgs"></div>
+  <div class="cv-input">
+    <input class="cv-inp" id="cv-inp" placeholder="Écrire un message..." onkeydown="if(event.key==='Enter')sendMsg()"/>
+    <button class="cv-send" onclick="sendMsg()">➤</button>
+  </div>
+</div>
+
+<!-- ══ PAYMENT MODAL ══ -->
+<div class="overlay" id="pay-overlay">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-title">💳 Paiement sécurisé</div>
+    <div class="pay-preview">
+      <div class="pay-ico" id="pay-ico">🔥</div>
+      <div>
+        <div class="pay-pname" id="pay-pname">Guide Perte de Poids</div>
+        <div class="pay-pprice" id="pay-pprice">12,99€</div>
+      </div>
+    </div>
+    <div class="pay-fields">
+      <div class="pay-f">
+        <label>Email</label>
+        <input type="email" id="pay-email" placeholder="votre@email.com"/>
+      </div>
+      <div class="pay-f">
+        <label>Numéro de carte</label>
+        <input type="text" id="pay-card" placeholder="1234 5678 9012 3456" maxlength="19" oninput="fmtCard(this)"/>
+      </div>
+      <div class="pay-row">
+        <div class="pay-f">
+          <label>Expiration</label>
+          <input type="text" id="pay-exp" placeholder="MM/AA" maxlength="5" oninput="fmtExp(this)"/>
+        </div>
+        <div class="pay-f">
+          <label>CVV</label>
+          <input type="text" placeholder="123" maxlength="3"/>
+        </div>
+      </div>
+      <div class="pay-brands">
+        <div class="pay-brand">VISA</div>
+        <div class="pay-brand">MC</div>
+        <div class="pay-brand">AMEX</div>
+        <div class="pay-brand">🔒 Stripe</div>
+      </div>
+      <button class="btn btn-green" id="pay-btn" onclick="doPay()">Payer <span id="pay-amt">12,99€</span></button>
+      <button class="btn btn-ghost" onclick="closeOverlay('pay-overlay')">Annuler</button>
+    </div>
+  </div>
+</div>
+
+<!-- WEIGHT MODAL -->
+<div class="t-modal" id="w-modal">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-title">📉 Mettre à jour le poids</div>
+    <div class="field"><label>Poids actuel (kg)</label><input type="number" id="w-inp" placeholder="68.4" step="0.1"/></div>
+    <div class="field" style="margin-bottom:20px;">
+      <label>Énergie du jour</label>
+      <select id="w-energy" style="width:100%;background:var(--bg);border:1.5px solid var(--br);border-radius:16px;padding:15px 18px;font-size:15px;font-family:var(--font);font-weight:600;color:var(--t);outline:none;">
+        <option>💪 Top forme !</option>
+        <option>😊 Bonne journée</option>
+        <option>😐 Journée moyenne</option>
+        <option>😴 Fatigué(e)</option>
+      </select>
+    </div>
+    <button class="btn btn-green" onclick="saveWeight()">Enregistrer</button>
+    <button class="btn btn-ghost" onclick="closeOverlay('w-modal')">Annuler</button>
+  </div>
+</div>
+
+<!-- MESURES MODAL -->
+<div class="t-modal" id="m-modal">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-title">📏 Mes mesures</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+      <div class="field"><label>Taille (cm)</label><input type="number" id="m-waist-inp" placeholder="68"/></div>
+      <div class="field"><label>Hanches (cm)</label><input type="number" id="m-hips-inp" placeholder="90"/></div>
+    </div>
+    <div class="field" style="margin-bottom:20px;"><label>Bras (cm)</label><input type="number" id="m-arms-inp" placeholder="28"/></div>
+    <button class="btn btn-green" onclick="saveMesures()">Enregistrer</button>
+    <button class="btn btn-ghost" onclick="closeOverlay('m-modal')">Annuler</button>
+  </div>
+</div>
+
+<!-- SUCCESS -->
+<div class="success-screen" id="success">
+  <div class="success-ring">🎉</div>
+  <div class="success-t">Paiement réussi !</div>
+  <div class="success-s">Votre guide est maintenant disponible dans "Mes guides"</div>
+  <button class="btn btn-green" style="width:260px;margin-top:8px;" onclick="closeSuccess()">Voir mes guides →</button>
+</div>
+
+<div id="toast"></div>
+
+<script>
+// ══ DATA ══
+const PRODS = [
+  {id:1,name:"Guide Perte de Poids 30 Jours",emoji:"🔥",price:"12,99€",pn:12.99,old:"24,99€",badge:"BEST-SELLER",bc:"#EA580C",bg:"linear-gradient(135deg,#052e16,#14532d)",ac:"#34D399",cat:"sport",stars:"4.9",rev:"318",desc:"Plan repas · 20 exercices · recettes minceur"},
+  {id:2,name:"Bible de la Nutrition Saine",emoji:"🥗",price:"9,99€",pn:9.99,old:"19,99€",badge:"NOUVEAU",bc:"#2563EB",bg:"linear-gradient(135deg,#0c1a4f,#1e3a8a)",ac:"#38BDF8",cat:"nutrition",stars:"4.8",rev:"142",desc:"200+ recettes · 3 plans kcal · batch cooking"},
+  {id:3,name:"Programme HIIT 8 Semaines",emoji:"⚡",price:"14,99€",pn:14.99,old:"29,99€",badge:"POPULAIRE",bc:"#7C3AED",bg:"linear-gradient(135deg,#1e0a4f,#3b0f8c)",ac:"#C084FC",cat:"sport",stars:"4.9",rev:"207",desc:"160+ exercices · 4 protocoles HIIT"},
+  {id:4,name:"Pack Complet Transformation",emoji:"💎",price:"24,99€",pn:24.99,old:"57,97€",badge:"-57% PROMO",bc:"#B45309",bg:"linear-gradient(135deg,#1c0a00,#431407)",ac:"#FDE047",cat:"pack",stars:"5.0",rev:"89",desc:"8 modules · 185+ pages · accès à vie"},
+];
+
+const CHATS = {
+  coach:{name:"FitGuides Coach",av:"💪",avbg:"linear-gradient(135deg,#065F46,#059669)",msgs:[
+    {from:"them",text:"Bienvenue sur FitGuides Pro ! 🎉 Je suis là pour t'accompagner dans ta transformation.",time:"Lun 09:00"},
+    {from:"them",text:"Comment s'est passée ta première semaine ?",time:"Lun 09:01"},
+    {from:"me",text:"Excellent ! J'ai déjà perdu 1.2kg 🔥",time:"Lun 10:30"},
+    {from:"them",text:"Incroyable ! Tu es en avance sur le programme. Continue comme ça 💪",time:"Lun 10:32"},
+    {from:"them",text:"Super progression cette semaine ! Continue comme ça 🔥",time:"Aujourd'hui 14:02"},
+  ]}
+};
+
+const AUTO_REPLIES = [
+  "Super question ! Je te réponds de suite 💪",
+  "Excellent travail, continue comme ça ! 🔥",
+  "Tu es sur la bonne voie, garde cette motivation ! ⚡",
+  "N'hésite pas si tu as d'autres questions 😊",
+  "Très bien ! Tu progresses vraiment vite 🌟",
+];
+
+let user = JSON.parse(localStorage.getItem('fg2_user')||'null');
+let bought = JSON.parse(localStorage.getItem('fg2_bought')||'[1,3]');
+let wLog = JSON.parse(localStorage.getItem('fg2_w')||JSON.stringify([
+  {w:"S1",v:72},{w:"S2",v:71.2},{w:"S3",v:70.1},{w:"S4",v:69.5},{w:"S5",v:68.8},{w:"S6",v:68.4}
+]));
+let curProd = null;
+let curFilter = 'all';
+let authMode = 'login';
+let curChat = null;
+
+// ══ BOOT ══
+setTimeout(()=>{ user ? boot() : showScreen('auth'); }, 1900);
+
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function boot(){
+  showScreen('app');
+  const n = user?.name||'Sophie';
+  document.getElementById('tb-name').textContent = n;
+  document.getElementById('tb-av').textContent = n[0].toUpperCase();
+  document.getElementById('p-av').textContent = n[0].toUpperCase();
+  document.getElementById('p-name').textContent = n;
+  document.getElementById('p-email').textContent = user?.email||'';
+  renderHomeProds();
+  renderShop();
+  renderWeight();
+  renderCal();
+  renderMyGuides();
+  renderChatList();
+  updateProfileCounts();
+}
+
+// ══ AUTH ══
+function setAuthTab(mode,btn){
+  authMode = mode;
+  document.querySelectorAll('.auth-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('reg-fields').style.display = mode==='reg'?'block':'none';
+  document.getElementById('a-btn').textContent = mode==='login'?'Se connecter →':"S'inscrire →";
+}
+
+function doAuth(){
+  const email = document.getElementById('a-email').value;
+  const pass = document.getElementById('a-pass').value;
+  const name = document.getElementById('a-name').value||'Sophie';
+  if(!email||!pass){ showToast('⚠️ Remplis tous les champs'); return; }
+  const btn = document.getElementById('a-btn');
+  btn.innerHTML = '<span style="display:inline-block;width:18px;height:18px;border:2px solid rgba(0,0,0,.3);border-top-color:#000;border-radius:50%;animation:spin .6s linear infinite;vertical-align:middle;"></span>';
+  setTimeout(()=>{
+    user = {email, name: authMode==='login'?(JSON.parse(localStorage.getItem('fg2_user')||'{}').name||'Sophie'):name};
+    localStorage.setItem('fg2_user', JSON.stringify(user));
+    btn.textContent = authMode==='login'?'Se connecter →':"S'inscrire →";
+    boot();
+  },1100);
+}
+
+function quickDemo(){
+  user = {name:'Sophie',email:'demo@fitguides.fr'};
+  localStorage.setItem('fg2_user',JSON.stringify(user));
+  boot();
+}
+
+function doLogout(){
+  if(!confirm('Se déconnecter ?')) return;
+  user = null;
+  localStorage.removeItem('fg2_user');
+  showScreen('auth');
+}
+
+// ══ TABS ══
+function goTab(tab){
+  document.querySelectorAll('.tp').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.ni').forEach(n=>n.classList.remove('on'));
+  document.getElementById('t-'+tab).classList.add('on');
+  const ni = document.getElementById('n-'+tab);
+  if(ni) ni.classList.add('on');
+}
+
+// ══ HOME PRODUCTS ══
+function renderHomeProds(){
+  document.getElementById('home-prods').innerHTML = PRODS.map(p=>`
+    <div class="prod-mini">
+      <div class="prod-mini-top" style="background:${p.bg}">
+        <div class="prod-mini-badge" style="background:${p.bc}">${p.badge}</div>
+        <div class="prod-mini-ico">${p.emoji}</div>
+      </div>
+      <div class="prod-mini-body">
+        <div class="prod-mini-name">${p.name}</div>
+        <div class="prod-mini-price-row">
+          <span class="prod-mini-price" style="color:${p.ac}">${p.price}</span>
+          <span class="prod-mini-old">${p.old}</span>
+        </div>
+        <button class="prod-mini-btn" style="background:${p.ac}" onclick="buyOrDL(${p.id})">
+          ${bought.includes(p.id)?'↓ Télécharger':'Acheter'}
+        </button>
+      </div>
+    </div>`).join('');
+}
+
+// ══ SHOP ══
+function renderShop(f='all'){
+  const list = f==='all'?PRODS:PRODS.filter(p=>p.cat===f);
+  document.getElementById('shop-grid').innerHTML = list.map(p=>`
+    <div class="shop-c">
+      <div class="shop-c-top" style="background:${p.bg}">
+        <div class="shop-c-badge" style="background:${p.bc}">${p.badge}</div>
+        <div class="shop-c-ico">${p.emoji}</div>
+      </div>
+      <div class="shop-c-body">
+        <div class="shop-c-name">${p.name}</div>
+        <div class="shop-c-stars">★★★★★ ${p.stars} (${p.rev})</div>
+        <div class="shop-c-row">
+          <div>
+            <div class="shop-c-price" style="color:${p.ac}">${p.price}</div>
+            <div class="shop-c-old">${p.old}</div>
+          </div>
+          <button class="shop-c-btn" style="background:${p.bc};color:#fff" onclick="buyOrDL(${p.id})">
+            ${bought.includes(p.id)?'↓':'＋'}
+          </button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+function doFilter(f,btn){
+  curFilter=f;
+  document.querySelectorAll('.fil').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  renderShop(f);
+}
+
+// ══ WEIGHT ══
+function renderWeight(){
+  const mn = Math.min(...wLog.map(d=>d.v))-1;
+  const mx = Math.max(...wLog.map(d=>d.v))+1;
+  document.getElementById('wt-chart').innerHTML = wLog.map((d,i)=>{
+    const h = ((d.v-mn)/(mx-mn))*75+12;
+    const last = i===wLog.length-1;
+    return `<div class="bar" style="height:${h}px;background:${last?'var(--g)':'rgba(52,211,153,.25)'}"></div>`;
+  }).join('');
+  document.getElementById('wt-lbls').innerHTML = wLog.map(d=>`<div class="chart-lbl">${d.w}</div>`).join('');
+  const cur = wLog[wLog.length-1].v;
+  const start = wLog[0].v;
+  const diff = (cur-start).toFixed(1);
+  document.getElementById('m-start').textContent = start;
+  document.getElementById('m-now').textContent = cur;
+  document.getElementById('m-lost').textContent = diff;
+  document.getElementById('h-poids').textContent = cur;
+  document.getElementById('h-diff').textContent = diff;
+}
+
+// ══ CALENDAR ══
+function renderCal(){
+  const days=['L','M','M','J','V','S','D'];
+  const done=[1,1,0,1,1,0,0,1,1,0,1,0,0,0,1,1,1,0,1,0,0,1];
+  let html = days.map(d=>`<div class="cal-day-lbl">${d}</div>`).join('');
+  html += done.map((v,i)=>{
+    const cls = [1,6].includes(i%7)?'rest':v?'done':'miss';
+    return `<div class="cal-day ${cls}"></div>`;
+  }).join('');
+  document.getElementById('cal-grid').innerHTML = html;
+}
+
+// ══ MY GUIDES ══
+function renderMyGuides(){
+  const mine = PRODS.filter(p=>bought.includes(p.id));
+  document.getElementById('my-guides').innerHTML = mine.length
+    ? mine.map(p=>`
+      <div class="guide-row">
+        <div class="guide-ico">${p.emoji}</div>
+        <div class="guide-info">
+          <div class="guide-name">${p.name}</div>
+          <div class="guide-desc">${p.desc}</div>
+        </div>
+        <button class="guide-dl" onclick="showToast('📥 Téléchargement lancé !')">PDF ↓</button>
+      </div>`).join('')
+    : '<div style="text-align:center;padding:40px;color:var(--t3);font-size:14px;">Aucun guide acheté</div>';
+  updateProfileCounts();
+}
+
+// ══ CHAT ══
+function renderChatList(){
+  document.getElementById('chat-list-el').innerHTML = Object.entries(CHATS).map(([id,c])=>`
+    <div class="chat-row" onclick="openChat('${id}')">
+      <div class="chat-av" style="background:${c.avbg}">${c.av}</div>
+      <div class="chat-inf">
+        <div class="chat-nm">${c.name}</div>
+        <div class="chat-pv">${c.msgs[c.msgs.length-1].text}</div>
+      </div>
+      <div class="chat-mt">
+        <div class="chat-tm">${c.msgs[c.msgs.length-1].time}</div>
+        <div class="chat-un">1</div>
+      </div>
+    </div>`).join('');
+}
+
+function openChat(id){
+  curChat=id;
+  const c=CHATS[id];
+  document.getElementById('cv-name').textContent=c.name;
+  document.getElementById('cv-av').textContent=c.av;
+  document.getElementById('cv-av').style.background=c.avbg;
+  const el=document.getElementById('cv-msgs');
+  el.innerHTML=c.msgs.map(m=>`
+    <div class="bubble-wrap ${m.from}">
+      <div class="bubble ${m.from}">${m.text}</div>
+      <div class="bubble-time">${m.time}</div>
+    </div>`).join('');
+  el.scrollTop=el.scrollHeight;
+  showScreen('chatScreen');
+}
+
+function closeChat(){ showScreen('app'); }
+
+function sendMsg(){
+  const inp=document.getElementById('cv-inp');
+  const txt=inp.value.trim();
+  if(!txt) return;
+  const c=CHATS[curChat];
+  const t=new Date().getHours()+':'+(new Date().getMinutes()+'').padStart(2,'0');
+  c.msgs.push({from:'me',text:txt,time:t});
+  inp.value='';
+  const el=document.getElementById('cv-msgs');
+  el.innerHTML+=`<div class="bubble-wrap me"><div class="bubble me">${txt}</div><div class="bubble-time">${t}</div></div>`;
+  el.scrollTop=el.scrollHeight;
+  setTimeout(()=>{
+    const r=AUTO_REPLIES[Math.floor(Math.random()*AUTO_REPLIES.length)];
+    c.msgs.push({from:'them',text:r,time:t});
+    el.innerHTML+=`<div class="bubble-wrap them"><div class="bubble them">${r}</div><div class="bubble-time">${t}</div></div>`;
+    el.scrollTop=el.scrollHeight;
+  },1200);
+}
+
+// ══ PURCHASE ══
+function buyOrDL(id){
+  if(bought.includes(id)){ showToast('📥 Téléchargement lancé !'); return; }
+  curProd=PRODS.find(p=>p.id===id);
+  document.getElementById('pay-ico').textContent=curProd.emoji;
+  document.getElementById('pay-pname').textContent=curProd.name;
+  document.getElementById('pay-pprice').textContent=curProd.price;
+  document.getElementById('pay-amt').textContent=curProd.price;
+  if(user) document.getElementById('pay-email').value=user.email||'';
+  document.getElementById('pay-overlay').classList.add('open');
+}
+
+function doPay(){
+  const card=document.getElementById('pay-card').value;
+  const exp=document.getElementById('pay-exp').value;
+  if(!card||card.length<19||!exp){ showToast('⚠️ Remplis correctement ta carte'); return; }
+  const btn=document.getElementById('pay-btn');
+  btn.innerHTML='<span style="display:inline-block;width:18px;height:18px;border:2px solid rgba(0,0,0,.3);border-top-color:#000;border-radius:50%;animation:spin .6s linear infinite;vertical-align:middle;margin-right:8px;"></span>Traitement...';
+  btn.disabled=true;
+  setTimeout(()=>{
+    btn.innerHTML='Payer <span id="pay-amt">'+curProd.price+'</span>';
+    btn.disabled=false;
+    closeOverlay('pay-overlay');
+    bought.push(curProd.id);
+    localStorage.setItem('fg2_bought',JSON.stringify(bought));
+    document.getElementById('success').classList.add('open');
+    renderMyGuides();
+    renderShop(curFilter);
+    renderHomeProds();
+  },2200);
+}
+
+function closeSuccess(){
+  document.getElementById('success').classList.remove('open');
+  goTab('tracker');
+}
+
+function fmtCard(i){ let v=i.value.replace(/\D/g,'').slice(0,16); i.value=v.match(/.{1,4}/g)?.join(' ')||v; }
+function fmtExp(i){ let v=i.value.replace(/\D/g,'').slice(0,4); if(v.length>2)v=v.slice(0,2)+'/'+v.slice(2); i.value=v; }
+
+// ══ TRACKER ══
+function openWModal(){ document.getElementById('w-modal').classList.add('open'); }
+function openMModal(){ document.getElementById('m-modal').classList.add('open'); }
+function closeOverlay(id){ document.getElementById(id).classList.remove('open'); }
+
+function saveWeight(){
+  const v=parseFloat(document.getElementById('w-inp').value);
+  if(!v){ showToast('⚠️ Entre ton poids'); return; }
+  const nxt='S'+(wLog.length+1);
+  wLog.push({w:nxt,v});
+  localStorage.setItem('fg2_w',JSON.stringify(wLog));
+  renderWeight();
+  closeOverlay('w-modal');
+  showToast('✅ Poids enregistré !');
+}
+
+function saveMesures(){
+  const t=document.getElementById('m-waist-inp').value;
+  const h=document.getElementById('m-hips-inp').value;
+  const a=document.getElementById('m-arms-inp').value;
+  if(t) document.getElementById('m-waist').textContent=t;
+  if(h) document.getElementById('m-hips').textContent=h;
+  if(a) document.getElementById('m-arms').textContent=a;
+  closeOverlay('m-modal');
+  showToast('✅ Mesures enregistrées !');
+}
+
+// ══ UTILS ══
+function updateProfileCounts(){
+  document.getElementById('p-guides-count').textContent=bought.length+' guide'+(bought.length>1?'s':'')+' acheté'+(bought.length>1?'s':'');
+}
+
+function copyPromo(){
+  navigator.clipboard?.writeText('TIKTOK20').then(()=>showToast('✅ Code TIKTOK20 copié !'));
+}
+
+let tt;
+function showToast(msg){
+  const el=document.getElementById('toast');
+  el.textContent=msg;
+  el.classList.add('show');
+  clearTimeout(tt);
+  tt=setTimeout(()=>el.classList.remove('show'),2400);
+}
+
+// Close modals on backdrop click
+['pay-overlay','w-modal','m-modal'].forEach(id=>{
+  document.getElementById(id).addEventListener('click',e=>{
+    if(e.target===document.getElementById(id)) closeOverlay(id);
+  });
+});
+</script>
+</body>
+</html>
